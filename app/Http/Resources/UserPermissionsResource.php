@@ -14,6 +14,10 @@ class UserPermissionsResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "no" => $this->no,
+            "userNo" => $this->user_no,
+            "isBanned" => $this->is_banned
+        ];
     }
 }

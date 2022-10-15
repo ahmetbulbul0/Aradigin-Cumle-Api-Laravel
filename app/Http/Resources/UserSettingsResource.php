@@ -14,6 +14,13 @@ class UserSettingsResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "no" => $this->no,
+            "userNo" => $this->user_no,
+            "isPublic" => $this->is_public,
+            "profilePhoto" => $this->profile_photo,
+            "websiteTheme" => $this->website_theme,
+            "dashboardTheme" => $this->dashboard_theme
+        ];
     }
 }

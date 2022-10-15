@@ -14,6 +14,10 @@ class ResourceUrlsResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "no" => $this->no,
+            "url" => $this->url,
+            "platform" => $this->platform
+        ];
     }
 }

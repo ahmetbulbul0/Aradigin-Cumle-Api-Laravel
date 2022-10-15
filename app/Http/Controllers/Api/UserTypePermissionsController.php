@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
 use App\Models\UserTypePermissions;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserTypePermissionsCollection;
 use App\Http\Requests\StoreUserTypePermissionsRequest;
 use App\Http\Requests\UpdateUserTypePermissionsRequest;
+use App\Http\Resources\UserTypePermissionsResource;
 
 class UserTypePermissionsController extends Controller
 {
@@ -16,17 +19,7 @@ class UserTypePermissionsController extends Controller
      */
     public function index()
     {
-        return UserTypePermissions::all();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new UserTypePermissionsCollection(UserTypePermissions::paginate());
     }
 
     /**
@@ -46,9 +39,11 @@ class UserTypePermissionsController extends Controller
      * @param  \App\Models\UserTypePermissions  $userTypePermissions
      * @return \Illuminate\Http\Response
      */
-    public function show(UserTypePermissions $userTypePermissions)
+    public function show(Request $request)
     {
-        //
+        $no = $request->user_type_permission;
+        $userTypePermission = UserTypePermissions::where(["is_deleted" => false, "no" => $no])->first();
+        return new UserTypePermissionsResource($userTypePermission);
     }
 
     /**

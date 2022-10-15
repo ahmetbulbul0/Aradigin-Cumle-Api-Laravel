@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\ResourceUrls;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ResourceUrlsCollection;
 use App\Http\Requests\StoreResourceUrlsRequest;
 use App\Http\Requests\UpdateResourceUrlsRequest;
+use App\Http\Resources\ResourceUrlsResource;
 
 class ResourceUrlsController extends Controller
 {
@@ -16,17 +19,7 @@ class ResourceUrlsController extends Controller
      */
     public function index()
     {
-        return ResourceUrls::all();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new ResourceUrlsCollection(ResourceUrls::paginate());
     }
 
     /**
@@ -46,9 +39,11 @@ class ResourceUrlsController extends Controller
      * @param  \App\Models\ResourceUrls  $resourceUrls
      * @return \Illuminate\Http\Response
      */
-    public function show(ResourceUrls $resourceUrls)
+    public function show(Request $request)
     {
-        //
+        $no = $request->resource_url;
+        $resourceUrl = ResourceUrls::where(["is_deleted" => false, "no" => $no])->first();
+        return new ResourceUrlsResource($resourceUrl);
     }
 
     /**

@@ -14,6 +14,11 @@ class UserTypesResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "no" => $this->no,
+            "name" => $this->name,
+            "slug" => $this->slug,
+            "permissions" => $this->permissions
+        ];
     }
 }

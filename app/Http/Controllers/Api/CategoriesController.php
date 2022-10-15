@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Categories;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoriesCollection;
 use App\Http\Requests\StoreCategoriesRequest;
 use App\Http\Requests\UpdateCategoriesRequest;
+use App\Http\Resources\CategoriesResource;
 
 class CategoriesController extends Controller
 {
@@ -16,17 +19,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        return Categories::all();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new CategoriesCollection(Categories::paginate());
     }
 
     /**
@@ -46,9 +39,11 @@ class CategoriesController extends Controller
      * @param  \App\Models\Categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function show(Categories $categories)
+    public function show(Request $request)
     {
-        //
+        $no = $request->category;
+        $category = Categories::where(["is_deleted" => false, "no" => $no])->first();
+        return new CategoriesResource($category);
     }
 
     /**

@@ -14,6 +14,9 @@ class UserTypePermissionsResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "no" => $this->no,
+            "userTypeNo" => $this->user_type_no
+        ];
     }
 }

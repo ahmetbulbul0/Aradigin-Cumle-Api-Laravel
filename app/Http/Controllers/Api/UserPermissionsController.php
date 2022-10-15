@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
 use App\Models\UserPermissions;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserPermissionsCollection;
 use App\Http\Requests\StoreUserPermissionsRequest;
 use App\Http\Requests\UpdateUserPermissionsRequest;
+use App\Http\Resources\UserPermissionsResource;
 
 class UserPermissionsController extends Controller
 {
@@ -16,17 +19,7 @@ class UserPermissionsController extends Controller
      */
     public function index()
     {
-        return UserPermissions::all();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new UserPermissionsCollection(UserPermissions::paginate());
     }
 
     /**
@@ -46,9 +39,11 @@ class UserPermissionsController extends Controller
      * @param  \App\Models\UserPermissions  $userPermissions
      * @return \Illuminate\Http\Response
      */
-    public function show(UserPermissions $userPermissions)
+    public function show(Request $request)
     {
-        //
+        $no = $request->user_permission;
+        $userPermission = UserPermissions::where(["is_deleted" => false, "no" => $no])->first();
+        return new UserPermissionsResource($userPermission);
     }
 
     /**

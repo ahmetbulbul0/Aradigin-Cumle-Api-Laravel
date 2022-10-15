@@ -6,6 +6,9 @@ use App\Models\UserTypes;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserTypesRequest;
 use App\Http\Requests\UpdateUserTypesRequest;
+use App\Http\Resources\UserTypesCollection;
+use App\Http\Resources\UserTypesResource;
+use Illuminate\Http\Request;
 
 class UserTypesController extends Controller
 {
@@ -16,7 +19,7 @@ class UserTypesController extends Controller
      */
     public function index()
     {
-        return UserTypes::all();
+        return new UserTypesCollection(UserTypes::paginate());
     }
 
     /**
@@ -36,9 +39,11 @@ class UserTypesController extends Controller
      * @param  \App\Models\UserTypes  $userTypes
      * @return \Illuminate\Http\Response
      */
-    public function show(UserTypes $userTypes)
+    public function show(Request $request)
     {
-        return $userTypes;
+        $no = $request->user_type;
+        $userType = UserTypes::where(["is_deleted" => false, "no" => $no])->first();
+        return new UserTypesResource($userType);
     }
 
     /**

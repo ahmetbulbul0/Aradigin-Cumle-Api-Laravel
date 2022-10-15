@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\News;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\NewsCollection;
 use App\Http\Requests\StoreNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
+use App\Http\Resources\NewsResource;
 
 class NewsController extends Controller
 {
@@ -16,17 +19,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return News::all();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new NewsCollection(News::paginate());
     }
 
     /**
@@ -46,9 +39,11 @@ class NewsController extends Controller
      * @param  \App\Models\News  $news
      * @return \Illuminate\Http\Response
      */
-    public function show(News $news)
+    public function show(Request $request)
     {
-        //
+        $no = $request->news;
+        $news = News::where(["is_deleted" => false, "no" => $no])->first();
+        return new NewsResource($news);
     }
 
     /**

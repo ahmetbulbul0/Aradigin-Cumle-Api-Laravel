@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Users;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UsersCollection;
 use App\Http\Requests\StoreUsersRequest;
 use App\Http\Requests\UpdateUsersRequest;
+use App\Http\Resources\UsersResource;
 
 class UsersController extends Controller
 {
@@ -16,17 +19,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return Users::all();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new UsersCollection(Users::paginate());
     }
 
     /**
@@ -46,9 +39,11 @@ class UsersController extends Controller
      * @param  \App\Models\Users  $users
      * @return \Illuminate\Http\Response
      */
-    public function show(Users $users)
+    public function show(Request $request)
     {
-        //
+        $no = $request->user;
+        $user = Users::where(["is_deleted" => false, "no" => $no])->first();
+        return new UsersResource($user);
     }
 
     /**
