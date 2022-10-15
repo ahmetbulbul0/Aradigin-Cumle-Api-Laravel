@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\News;
-use App\Http\Requests\StoreNewsRequest;
-use App\Http\Requests\UpdateNewsRequest;
+use App\Models\UserSettings;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserSettingsRequest;
+use App\Http\Requests\UpdateUserSettingsRequest;
 
-class NewsController extends Controller
+class UserSettingsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        //
+        return UserSettings::all();
     }
 
     /**
@@ -31,10 +32,10 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreNewsRequest  $request
+     * @param  \App\Http\Requests\StoreUserSettingsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreNewsRequest $request)
+    public function store(StoreUserSettingsRequest $request)
     {
         //
     }
@@ -42,10 +43,10 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\News  $news
+     * @param  \App\Models\UserSettings  $userSettings
      * @return \Illuminate\Http\Response
      */
-    public function show(News $news)
+    public function show(UserSettings $userSettings)
     {
         //
     }
@@ -53,10 +54,10 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\News  $news
+     * @param  \App\Models\UserSettings  $userSettings
      * @return \Illuminate\Http\Response
      */
-    public function edit(News $news)
+    public function edit(UserSettings $userSettings)
     {
         //
     }
@@ -64,11 +65,11 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateNewsRequest  $request
-     * @param  \App\Models\News  $news
+     * @param  \App\Http\Requests\UpdateUserSettingsRequest  $request
+     * @param  \App\Models\UserSettings  $userSettings
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateNewsRequest $request, News $news)
+    public function update(UpdateUserSettingsRequest $request, UserSettings $userSettings)
     {
         //
     }
@@ -76,10 +77,10 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\News  $news
+     * @param  \App\Models\UserSettings  $userSettings
      * @return \Illuminate\Http\Response
      */
-    public function destroy(News $news)
+    public function destroy(UserSettings $userSettings)
     {
         //
     }

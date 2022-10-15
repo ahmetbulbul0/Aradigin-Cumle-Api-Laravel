@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\UserTypePermissions;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserTypePermissionsRequest;
 use App\Http\Requests\UpdateUserTypePermissionsRequest;
 
@@ -15,7 +16,7 @@ class UserTypePermissionsController extends Controller
      */
     public function index()
     {
-        //
+        return UserTypePermissions::all();
     }
 
     /**

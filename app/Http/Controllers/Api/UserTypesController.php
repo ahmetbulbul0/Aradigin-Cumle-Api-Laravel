@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\UserTypes;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserTypesRequest;
 use App\Http\Requests\UpdateUserTypesRequest;
 
@@ -15,17 +16,7 @@ class UserTypesController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return UserTypes::all();
     }
 
     /**
@@ -47,7 +38,7 @@ class UserTypesController extends Controller
      */
     public function show(UserTypes $userTypes)
     {
-        //
+        return $userTypes;
     }
 
     /**

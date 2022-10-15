@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\ResourceUrls;
-use App\Http\Requests\StoreResourceUrlsRequest;
-use App\Http\Requests\UpdateResourceUrlsRequest;
+use App\Models\Categories;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCategoriesRequest;
+use App\Http\Requests\UpdateCategoriesRequest;
 
-class ResourceUrlsController extends Controller
+class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class ResourceUrlsController extends Controller
      */
     public function index()
     {
-        //
+        return Categories::all();
     }
 
     /**
@@ -31,10 +32,10 @@ class ResourceUrlsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreResourceUrlsRequest  $request
+     * @param  \App\Http\Requests\StoreCategoriesRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreResourceUrlsRequest $request)
+    public function store(StoreCategoriesRequest $request)
     {
         //
     }
@@ -42,10 +43,10 @@ class ResourceUrlsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ResourceUrls  $resourceUrls
+     * @param  \App\Models\Categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function show(ResourceUrls $resourceUrls)
+    public function show(Categories $categories)
     {
         //
     }
@@ -53,10 +54,10 @@ class ResourceUrlsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ResourceUrls  $resourceUrls
+     * @param  \App\Models\Categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function edit(ResourceUrls $resourceUrls)
+    public function edit(Categories $categories)
     {
         //
     }
@@ -64,11 +65,11 @@ class ResourceUrlsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateResourceUrlsRequest  $request
-     * @param  \App\Models\ResourceUrls  $resourceUrls
+     * @param  \App\Http\Requests\UpdateCategoriesRequest  $request
+     * @param  \App\Models\Categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateResourceUrlsRequest $request, ResourceUrls $resourceUrls)
+    public function update(UpdateCategoriesRequest $request, Categories $categories)
     {
         //
     }
@@ -76,10 +77,10 @@ class ResourceUrlsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ResourceUrls  $resourceUrls
+     * @param  \App\Models\Categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ResourceUrls $resourceUrls)
+    public function destroy(Categories $categories)
     {
         //
     }

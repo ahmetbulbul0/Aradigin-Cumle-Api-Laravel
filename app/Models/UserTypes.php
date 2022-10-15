@@ -11,6 +11,8 @@ class UserTypes extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = "id";
+
     public function users() {
         return $this->belongsTo(Users::class, "type", "no");
     }

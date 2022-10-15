@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Users;
-use App\Http\Requests\StoreUsersRequest;
-use App\Http\Requests\UpdateUsersRequest;
+use App\Models\ResourceUrls;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreResourceUrlsRequest;
+use App\Http\Requests\UpdateResourceUrlsRequest;
 
-class UsersController extends Controller
+class ResourceUrlsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        return ResourceUrls::all();
     }
 
     /**
@@ -31,10 +32,10 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreUsersRequest  $request
+     * @param  \App\Http\Requests\StoreResourceUrlsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUsersRequest $request)
+    public function store(StoreResourceUrlsRequest $request)
     {
         //
     }
@@ -42,10 +43,10 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Users  $users
+     * @param  \App\Models\ResourceUrls  $resourceUrls
      * @return \Illuminate\Http\Response
      */
-    public function show(Users $users)
+    public function show(ResourceUrls $resourceUrls)
     {
         //
     }
@@ -53,10 +54,10 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Users  $users
+     * @param  \App\Models\ResourceUrls  $resourceUrls
      * @return \Illuminate\Http\Response
      */
-    public function edit(Users $users)
+    public function edit(ResourceUrls $resourceUrls)
     {
         //
     }
@@ -64,11 +65,11 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateUsersRequest  $request
-     * @param  \App\Models\Users  $users
+     * @param  \App\Http\Requests\UpdateResourceUrlsRequest  $request
+     * @param  \App\Models\ResourceUrls  $resourceUrls
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUsersRequest $request, Users $users)
+    public function update(UpdateResourceUrlsRequest $request, ResourceUrls $resourceUrls)
     {
         //
     }
@@ -76,10 +77,10 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Users  $users
+     * @param  \App\Models\ResourceUrls  $resourceUrls
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Users $users)
+    public function destroy(ResourceUrls $resourceUrls)
     {
         //
     }

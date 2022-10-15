@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\UserPermissions;
-use App\Http\Requests\StoreUserPermissionsRequest;
-use App\Http\Requests\UpdateUserPermissionsRequest;
+use App\Models\News;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreNewsRequest;
+use App\Http\Requests\UpdateNewsRequest;
 
-class UserPermissionsController extends Controller
+class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class UserPermissionsController extends Controller
      */
     public function index()
     {
-        //
+        return News::all();
     }
 
     /**
@@ -31,10 +32,10 @@ class UserPermissionsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreUserPermissionsRequest  $request
+     * @param  \App\Http\Requests\StoreNewsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserPermissionsRequest $request)
+    public function store(StoreNewsRequest $request)
     {
         //
     }
@@ -42,10 +43,10 @@ class UserPermissionsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\UserPermissions  $userPermissions
+     * @param  \App\Models\News  $news
      * @return \Illuminate\Http\Response
      */
-    public function show(UserPermissions $userPermissions)
+    public function show(News $news)
     {
         //
     }
@@ -53,10 +54,10 @@ class UserPermissionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\UserPermissions  $userPermissions
+     * @param  \App\Models\News  $news
      * @return \Illuminate\Http\Response
      */
-    public function edit(UserPermissions $userPermissions)
+    public function edit(News $news)
     {
         //
     }
@@ -64,11 +65,11 @@ class UserPermissionsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateUserPermissionsRequest  $request
-     * @param  \App\Models\UserPermissions  $userPermissions
+     * @param  \App\Http\Requests\UpdateNewsRequest  $request
+     * @param  \App\Models\News  $news
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserPermissionsRequest $request, UserPermissions $userPermissions)
+    public function update(UpdateNewsRequest $request, News $news)
     {
         //
     }
@@ -76,10 +77,10 @@ class UserPermissionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\UserPermissions  $userPermissions
+     * @param  \App\Models\News  $news
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserPermissions $userPermissions)
+    public function destroy(News $news)
     {
         //
     }

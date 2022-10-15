@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\ResourcePlatforms;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreResourcePlatformsRequest;
 use App\Http\Requests\UpdateResourcePlatformsRequest;
 
@@ -15,7 +16,7 @@ class ResourcePlatformsController extends Controller
      */
     public function index()
     {
-        //
+        return ResourcePlatforms::all();
     }
 
     /**

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\UserSettings;
-use App\Http\Requests\StoreUserSettingsRequest;
-use App\Http\Requests\UpdateUserSettingsRequest;
+use App\Models\Users;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUsersRequest;
+use App\Http\Requests\UpdateUsersRequest;
 
-class UserSettingsController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class UserSettingsController extends Controller
      */
     public function index()
     {
-        //
+        return Users::all();
     }
 
     /**
@@ -31,10 +32,10 @@ class UserSettingsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreUserSettingsRequest  $request
+     * @param  \App\Http\Requests\StoreUsersRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserSettingsRequest $request)
+    public function store(StoreUsersRequest $request)
     {
         //
     }
@@ -42,10 +43,10 @@ class UserSettingsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\UserSettings  $userSettings
+     * @param  \App\Models\Users  $users
      * @return \Illuminate\Http\Response
      */
-    public function show(UserSettings $userSettings)
+    public function show(Users $users)
     {
         //
     }
@@ -53,10 +54,10 @@ class UserSettingsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\UserSettings  $userSettings
+     * @param  \App\Models\Users  $users
      * @return \Illuminate\Http\Response
      */
-    public function edit(UserSettings $userSettings)
+    public function edit(Users $users)
     {
         //
     }
@@ -64,11 +65,11 @@ class UserSettingsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateUserSettingsRequest  $request
-     * @param  \App\Models\UserSettings  $userSettings
+     * @param  \App\Http\Requests\UpdateUsersRequest  $request
+     * @param  \App\Models\Users  $users
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserSettingsRequest $request, UserSettings $userSettings)
+    public function update(UpdateUsersRequest $request, Users $users)
     {
         //
     }
@@ -76,10 +77,10 @@ class UserSettingsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\UserSettings  $userSettings
+     * @param  \App\Models\Users  $users
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserSettings $userSettings)
+    public function destroy(Users $users)
     {
         //
     }
