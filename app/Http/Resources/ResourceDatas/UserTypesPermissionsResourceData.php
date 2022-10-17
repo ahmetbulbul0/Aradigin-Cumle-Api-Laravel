@@ -8,7 +8,6 @@ class UserTypesPermissionsResourceData
     {
         $data = [
             "no" => $thisData->no,
-            "userTypeNo" => $thisData->user_type_no
         ];
 
         return $data;

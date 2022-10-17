@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\ResourceDatas\UserTypesResourceData;
-use App\Http\Resources\UserTypesUserTypePermissionsResource;
+use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\UserTypePermissionsResource;
 
-class UserTypesResource extends JsonResource
+class UserTypePermissionsUserTypesResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,6 @@ class UserTypesResource extends JsonResource
     public function toArray($request)
     {
         $data = UserTypesResourceData::get($this);
-
-        $data["permissions"] = new UserTypesUserTypePermissionsResource($this->permissionsData);
-        $data["users"] = UsersResource::collection($this->whenLoaded("users"));
 
         return $data;
     }

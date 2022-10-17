@@ -14,7 +14,7 @@ class News extends Model
     use HasFactory;
 
     public function authorData() {
-        return $this->hasOne(Users::class, "no", "author");
+        return $this->hasOne(Users::class, "no", "author")->with("typeData", "permissionsData", "settingsData");
     }
 
     public function categoryData() {

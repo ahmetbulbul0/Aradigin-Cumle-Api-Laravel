@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\News;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Categories extends Model
 {
@@ -15,5 +16,9 @@ class Categories extends Model
 
     public function childrenCategories() {
         return $this->hasMany(Categories::class, "parent_category", "no")->with("childrenCategories");
+    }
+
+    public function news() {
+        return $this->hasMany(News::class, "category", "no")->with("authorData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData");
     }
 }

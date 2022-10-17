@@ -8,7 +8,6 @@ class UserSettingsResourceData
     {
         $data = [
             "no" => $thisData->no,
-            "userNo" => $thisData->user_no,
             "isPublic" => $thisData->is_public,
             "profilePhoto" => $thisData->profile_photo,
             "websiteTheme" => $thisData->website_theme,

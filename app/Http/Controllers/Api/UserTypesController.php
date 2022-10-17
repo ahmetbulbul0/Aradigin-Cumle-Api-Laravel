@@ -19,7 +19,7 @@ class UserTypesController extends Controller
      */
     public function index()
     {
-        return new UserTypesCollection(UserTypes::where("is_deleted", false)->paginate());
+        return new UserTypesCollection(UserTypes::where("is_deleted", false)->with("users", "permissionsData")->paginate());
     }
 
     /**
@@ -42,7 +42,7 @@ class UserTypesController extends Controller
     public function show(Request $request)
     {
         $no = $request->user_type;
-        $userType = UserTypes::where(["is_deleted" => false, "no" => $no])->first();
+        $userType = UserTypes::where(["is_deleted" => false, "no" => $no])->with("users", "permissionsData")->first();
         return new UserTypesResource($userType);
     }
 

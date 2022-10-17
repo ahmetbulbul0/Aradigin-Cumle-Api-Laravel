@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\ResourceDatas\CategoriesResourceData;
 
-class CategoriesResource extends JsonResource
+class NewsCategoriesResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,8 @@ class CategoriesResource extends JsonResource
     {
         $data = CategoriesResourceData::get($this);
 
-        $data["parentCategory"] = new CategoriesResource($this->whenLoaded("parentCategoryData"));
-        $data["childrenCategories"] = CategoriesResource::collection($this->whenLoaded("childrenCategories"));
-        $data["news"] = NewsResource::collection($this->news);
+        $data["parentCategory"] = new NewsCategoriesResource($this->whenLoaded("parentCategoryData"));
+        $data["childrenCategories"] = NewsCategoriesResource::collection($this->whenLoaded("childrenCategories"));
 
         return $data;
     }

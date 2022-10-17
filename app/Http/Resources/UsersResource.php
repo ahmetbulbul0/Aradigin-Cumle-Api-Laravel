@@ -19,6 +19,7 @@ class UsersResource extends JsonResource
 
         $data["type"] = new UserTypesResource($this->whenLoaded("typeData"));
         $data["settings"] = new UserSettingsResource($this->whenLoaded("settingsData"));
+        $data["permissions"] = new UserPermissionsResource($this->whenLoaded("permissionsData"));
         $data["news"] = NewsResource::collection($this->whenLoaded("news"));
 
         return $data;

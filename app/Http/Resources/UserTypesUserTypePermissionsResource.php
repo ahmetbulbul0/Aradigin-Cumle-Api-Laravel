@@ -6,7 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\UserTypePermissionsUserTypesResource;
 use App\Http\Resources\ResourceDatas\UserTypesPermissionsResourceData;
 
-class UserTypePermissionsResource extends JsonResource
+class UserTypesUserTypePermissionsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,8 +17,6 @@ class UserTypePermissionsResource extends JsonResource
     public function toArray($request)
     {
         $data = UserTypesPermissionsResourceData::get($this);
-
-        $data["userType"] = new UserTypePermissionsUserTypesResource($this->userTypeData);
 
         return $data;
     }

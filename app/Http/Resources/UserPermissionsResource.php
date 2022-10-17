@@ -18,6 +18,8 @@ class UserPermissionsResource extends JsonResource
     {
         $data = UserPermissionsResourceData::get($this);
 
+        $data["user"] = new UsersResource($this->whenLoaded("userData"));
+
         return $data;
     }
 }

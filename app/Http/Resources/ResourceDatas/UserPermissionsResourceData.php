@@ -8,7 +8,6 @@ class UserPermissionsResourceData
     {
         $data = [
             "no" => $thisData->no,
-            "userNo" => $thisData->user_no,
             "isBanned" => $thisData->is_banned
         ];
 

@@ -17,6 +17,8 @@ class UserSettingsResource extends JsonResource
     {
         $data = UserSettingsResourceData::get($this);
 
+        $data["user"] = new UsersResource($this->whenLoaded("userData"));
+
         return $data;
     }
 }

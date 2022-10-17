@@ -9,9 +9,7 @@ class UserTypePermissions extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = "no";
-
-    public function userType() {
-        return $this->hasOne(UserTypes::class, "no", "user_type");
+    public function userTypeData() {
+        return $this->hasOne(UserTypes::class, "no", "user_type_no");
     }
 }
