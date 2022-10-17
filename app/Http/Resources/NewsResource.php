@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\ResourceDatas\NewsResourceData;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class NewsResource extends JsonResource
@@ -14,26 +15,15 @@ class NewsResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            "no" => $this->no,
-            "title" => $this->title,
-            "content" => $this->content,
-            "author" => $this->authorData ? new UsersResource($this->whenLoaded("authorData")) : $this->author,
-            "category" => $this->categoryData ? new CategoriesResource($this->whenLoaded("categoryData")) : $this->category,
-            "resourcePlatform" => $this->resourcePlatformData ? new ResourcePlatformsResource($this->whenLoaded("resourcePlatformData")) : $this->resourcePlatform,
-            "resourceUrl" => $this->resourceUrlData ? new ResourceUrlsResource($this->whenLoaded("resourceUrlData")) : $this->resourceUrl,
-            "addedTime" => $this->added_time,
-            "publishStatus" => $this->publish_status,
-            "publishDate" => $this->publish_date,
-            "status" => $this->status,
-            "slug" => $this->slug,
-            "isApproved" => $this->is_approved,
-            "approvedAt" => $this->approved_at,
-            "approvedBy" => $this->approvedByData ? new UsersResource($this->whenLoaded("approvedByData")) : $this->approvedBy,
-            "isRejected" => $this->is_rejected,
-            "rejectedAt" => $this->rejected_at,
-            "rejectedBy" => $this->rejectedByData ? new UsersResource($this->whenLoaded("rejectedByData")) : $this->rejectedBy,
-            "rejectedReason" => $this->rejected_reason
-        ];
+        $data = NewsResourceData::get($this);
+
+        $data["author"] = new UsersResource($this->whenLoaded("authorData"));
+        $data["category"] = new CategoriesResource($this->whenLoaded("categoryData"));
+        $data["resourcePlatform"] = new ResourcePlatformsResource($this->whenLoaded("resourcePlatformData"));
+        $data["resourceUrl"] = new ResourceUrlsResource($this->whenLoaded("resourceUrlData"));
+        $data["approvedBy"] = new UsersResource($this->whenLoaded("approvedByData"));
+        $data["rejectedBy"] = new UsersResource($this->whenLoaded("rejectedByData"));
+
+        return $data;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\ResourceDatas\CategoriesResourceData;
 
 class CategoriesResource extends JsonResource
 {
@@ -14,14 +15,11 @@ class CategoriesResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            "no" => $this->no,
-            "name" => $this->name,
-            "slug" => $this->slug,
-            "isParent" => $this->is_parent,
-            "isChildren" => $this->is_children,
-            "parentCategory" => $this->parentCategoryData ? new CategoriesResource($this->whenLoaded("parentCategoryData")) : $this->parentCategory,
-            "childrenCategories" => CategoriesResource::collection($this->whenLoaded("childrenCategories"))
-        ];
+        $data = CategoriesResourceData::get($this);
+
+        $data["parentCategory"] = new CategoriesResource($this->whenLoaded("parentCategoryData"));
+        $data["childrenCategories"] = CategoriesResource::collection($this->whenLoaded("childrenCategories"));
+
+        return $data;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\ResourceDatas\UserTypesPermissionsResourceData;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserTypePermissionsResource extends JsonResource
@@ -14,9 +15,8 @@ class UserTypePermissionsResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            "no" => $this->no,
-            "userTypeNo" => $this->user_type_no
-        ];
+        $data = UserTypesPermissionsResourceData::get($this);
+
+        return $data;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\ResourceDatas\UserTypesResourceData;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\UserTypePermissionsResource;
 
@@ -15,11 +16,10 @@ class UserTypesResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            "no" => $this->no,
-            "name" => $this->name,
-            "slug" => $this->slug,
-            "permissions" => $this->permissionsData ? new UserTypePermissionsResource($this->whenLoaded("permissionsData")) : $this->permissions
-        ];
+        $data = UserTypesResourceData::get($this);
+
+        $data["permissions"] = new UserTypePermissionsResource($this->permissionsData);
+
+        return $data;
     }
 }
