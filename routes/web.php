@@ -17,7 +17,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // return Users::with("type", "permissions", "settings", "news")->get();
-    // return Categories::with("parentCategory", "childrenCategories")->get();
-    return News::with("author", "category", "resourcePlatform", "resourceUrl", "approvedBy", "rejectedBy")->get();
+    return "HomePage";
 });

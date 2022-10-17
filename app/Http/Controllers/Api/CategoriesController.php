@@ -19,7 +19,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        return new CategoriesCollection(Categories::paginate());
+        return new CategoriesCollection(Categories::where("is_deleted", false)->with("parentCategoryData", "childrenCategories")->paginate());
     }
 
     /**
@@ -42,7 +42,7 @@ class CategoriesController extends Controller
     public function show(Request $request)
     {
         $no = $request->category;
-        $category = Categories::where(["is_deleted" => false, "no" => $no])->first();
+        $category = Categories::where(["is_deleted" => false, "no" => $no])->with("parentCategoryData", "childrenCategories")->first();
         return new CategoriesResource($category);
     }
 

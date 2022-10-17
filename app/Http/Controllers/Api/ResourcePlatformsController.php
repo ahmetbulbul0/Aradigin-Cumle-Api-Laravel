@@ -19,7 +19,7 @@ class ResourcePlatformsController extends Controller
      */
     public function index()
     {
-        return new ResourcePlatformsCollection(ResourcePlatforms::paginate());
+        return new ResourcePlatformsCollection(ResourcePlatforms::where("is_deleted", false)->with("resourceUrls", "news")->paginate());
     }
 
     /**
@@ -42,7 +42,7 @@ class ResourcePlatformsController extends Controller
     public function show(Request $request)
     {
         $no = $request->resource_platform;
-        $resourcePlatforms = ResourcePlatforms::where(["is_deleted" => false, "no" => $no])->first();
+        $resourcePlatforms = ResourcePlatforms::where(["is_deleted" => false, "no" => $no])->with("resourceUrls", "news")->first();
         return new ResourcePlatformsResource($resourcePlatforms);
     }
 

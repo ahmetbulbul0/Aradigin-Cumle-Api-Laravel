@@ -19,7 +19,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return new NewsCollection(News::paginate());
+        return new NewsCollection(News::where("is_deleted", false)->with("authorData", "categoryData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData")->paginate());
     }
 
     /**
@@ -42,7 +42,7 @@ class NewsController extends Controller
     public function show(Request $request)
     {
         $no = $request->news;
-        $news = News::where(["is_deleted" => false, "no" => $no])->first();
+        $news = News::where(["is_deleted" => false, "no" => $no])->with("authorData", "categoryData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData")->first();
         return new NewsResource($news);
     }
 

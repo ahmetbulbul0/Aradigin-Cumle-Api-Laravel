@@ -15,7 +15,7 @@ class UserTypes extends Model
         return $this->belongsTo(Users::class, "type", "no");
     }
 
-    public function permissions() {
-        return $this->hasMany(UserTypePermissions::class, "user_type_no", "no");
+    public function permissionsData() {
+        return $this->hasOne(UserTypePermissions::class, "user_type_no", "no");
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\NewsResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\ResourcePlatformsResource;
 
 class ResourceUrlsResource extends JsonResource
 {
@@ -17,7 +19,8 @@ class ResourceUrlsResource extends JsonResource
         return [
             "no" => $this->no,
             "url" => $this->url,
-            "platform" => $this->platform
+            "platform" => $this->platformData ? new ResourcePlatformsResource($this->whenLoaded("platformData")) : $this->platform,
+            "news" => NewsResource::collection($this->whenLoaded("news")),
         ];
     }
 }

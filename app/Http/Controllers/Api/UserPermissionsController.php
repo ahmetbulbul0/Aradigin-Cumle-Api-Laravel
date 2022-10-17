@@ -19,7 +19,7 @@ class UserPermissionsController extends Controller
      */
     public function index()
     {
-        return new UserPermissionsCollection(UserPermissions::paginate());
+        return new UserPermissionsCollection(UserPermissions::where("is_deleted", false)->with("userData")->paginate());
     }
 
     /**
@@ -42,7 +42,7 @@ class UserPermissionsController extends Controller
     public function show(Request $request)
     {
         $no = $request->user_permission;
-        $userPermission = UserPermissions::where(["is_deleted" => false, "no" => $no])->first();
+        $userPermission = UserPermissions::where(["is_deleted" => false, "no" => $no])->with("userData")->first();
         return new UserPermissionsResource($userPermission);
     }
 

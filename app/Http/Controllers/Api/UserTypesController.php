@@ -19,7 +19,7 @@ class UserTypesController extends Controller
      */
     public function index()
     {
-        return new UserTypesCollection(UserTypes::paginate());
+        return new UserTypesCollection(UserTypes::where("is_deleted", false)->paginate());
     }
 
     /**

@@ -9,8 +9,8 @@ class Categories extends Model
 {
     use HasFactory;
 
-    public function parentCategory() {
-        return $this->hasOne(Categories::class, "no", "parent_category")->with("parentCategory");
+    public function parentCategoryData() {
+        return $this->hasOne(Categories::class, "no", "parent_category")->with("parentCategoryData");
     }
 
     public function childrenCategories() {

@@ -11,13 +11,11 @@ class ResourcePlatforms extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = "no";
-
     public function resourceUrls() {
-        return $this->belongsTo(ResourceUrls::class, "platform", "no");
+        return $this->hasMany(ResourceUrls::class, "platform", "no");
     }
 
     public function news() {
-        return $this->belongsTo(News::class, "resource_platform", "no");
+        return $this->hasMany(News::class, "resource_platform", "no")->with("authorData", "categoryData", "resourceUrlData", "approvedByData", "rejectedByData");
     }
 }

@@ -18,10 +18,10 @@ class NewsResource extends JsonResource
             "no" => $this->no,
             "title" => $this->title,
             "content" => $this->content,
-            "author" => $this->author,
-            "category" => $this->category,
-            "resourcePlatform" => $this->resource_platform,
-            "resourceUrl" => $this->resource_url,
+            "author" => $this->authorData ? new UsersResource($this->whenLoaded("authorData")) : $this->author,
+            "category" => $this->categoryData ? new CategoriesResource($this->whenLoaded("categoryData")) : $this->category,
+            "resourcePlatform" => $this->resourcePlatformData ? new ResourcePlatformsResource($this->whenLoaded("resourcePlatformData")) : $this->resourcePlatform,
+            "resourceUrl" => $this->resourceUrlData ? new ResourceUrlsResource($this->whenLoaded("resourceUrlData")) : $this->resourceUrl,
             "addedTime" => $this->added_time,
             "publishStatus" => $this->publish_status,
             "publishDate" => $this->publish_date,
@@ -29,10 +29,10 @@ class NewsResource extends JsonResource
             "slug" => $this->slug,
             "isApproved" => $this->is_approved,
             "approvedAt" => $this->approved_at,
-            "approvedBy" => $this->approved_by,
+            "approvedBy" => $this->approvedByData ? new UsersResource($this->whenLoaded("approvedByData")) : $this->approvedBy,
             "isRejected" => $this->is_rejected,
             "rejectedAt" => $this->rejected_at,
-            "rejectedBy" => $this->rejected_by,
+            "rejectedBy" => $this->rejectedByData ? new UsersResource($this->whenLoaded("rejectedByData")) : $this->rejectedBy,
             "rejectedReason" => $this->rejected_reason
         ];
     }

@@ -19,7 +19,7 @@ class ResourceUrlsController extends Controller
      */
     public function index()
     {
-        return new ResourceUrlsCollection(ResourceUrls::paginate());
+        return new ResourceUrlsCollection(ResourceUrls::where("is_deleted", false)->with("platformData", "news")->paginate());
     }
 
     /**
@@ -42,7 +42,7 @@ class ResourceUrlsController extends Controller
     public function show(Request $request)
     {
         $no = $request->resource_url;
-        $resourceUrl = ResourceUrls::where(["is_deleted" => false, "no" => $no])->first();
+        $resourceUrl = ResourceUrls::where(["is_deleted" => false, "no" => $no])->with("platformData", "news")->first();
         return new ResourceUrlsResource($resourceUrl);
     }
 

@@ -19,7 +19,7 @@ class UserTypePermissionsController extends Controller
      */
     public function index()
     {
-        return new UserTypePermissionsCollection(UserTypePermissions::paginate());
+        return new UserTypePermissionsCollection(UserTypePermissions::where("is_deleted", false)->paginate());
     }
 
     /**

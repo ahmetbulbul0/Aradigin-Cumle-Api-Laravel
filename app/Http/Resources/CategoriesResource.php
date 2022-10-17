@@ -20,7 +20,8 @@ class CategoriesResource extends JsonResource
             "slug" => $this->slug,
             "isParent" => $this->is_parent,
             "isChildren" => $this->is_children,
-            "parentCategory" => $this->parent_category
+            "parentCategory" => $this->parentCategoryData ? new CategoriesResource($this->whenLoaded("parentCategoryData")) : $this->parentCategory,
+            "childrenCategories" => CategoriesResource::collection($this->whenLoaded("childrenCategories"))
         ];
     }
 }

@@ -19,7 +19,7 @@ class UserSettingsController extends Controller
      */
     public function index()
     {
-        return new UserSettingsCollection(UserSettings::paginate());
+        return new UserSettingsCollection(UserSettings::where("is_deleted", false)->paginate());
     }
 
     /**

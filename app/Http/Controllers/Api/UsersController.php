@@ -19,7 +19,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return new UsersCollection(Users::paginate());
+        return new UsersCollection(Users::where("is_deleted", false)->with("typeData", "permissionsData", "settingsData", "news")->paginate());
     }
 
     /**
@@ -42,7 +42,7 @@ class UsersController extends Controller
     public function show(Request $request)
     {
         $no = $request->user;
-        $user = Users::where(["is_deleted" => false, "no" => $no])->first();
+        $user = Users::where(["is_deleted" => false, "no" => $no])->with("typeData", "permissionsData", "settingsData", "news")->first();
         return new UsersResource($user);
     }
 
