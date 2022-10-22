@@ -19,7 +19,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return new NewsCollection(News::where("is_deleted", false)->with("authorData", "categoryData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData")->paginate());
+        $data = new NewsCollection(News::where("is_deleted", false)->with("authorData", "categoryData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData")->paginate());
+        return $data;
     }
 
     /**
@@ -44,17 +45,6 @@ class NewsController extends Controller
         $no = $request->news;
         $news = News::where(["is_deleted" => false, "no" => $no])->with("authorData", "categoryData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData")->first();
         return new NewsResource($news);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\News  $news
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(News $news)
-    {
-        //
     }
 
     /**

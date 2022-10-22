@@ -19,7 +19,8 @@ class ResourceUrlsController extends Controller
      */
     public function index()
     {
-        return new ResourceUrlsCollection(ResourceUrls::where("is_deleted", false)->with("platformData", "news")->paginate());
+        $data = new ResourceUrlsCollection(ResourceUrls::where("is_deleted", false)->with("platformData", "news")->paginate());
+        return $data;
     }
 
     /**
@@ -44,17 +45,6 @@ class ResourceUrlsController extends Controller
         $no = $request->resource_url;
         $resourceUrl = ResourceUrls::where(["is_deleted" => false, "no" => $no])->with("platformData", "news")->first();
         return new ResourceUrlsResource($resourceUrl);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ResourceUrls  $resourceUrls
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ResourceUrls $resourceUrls)
-    {
-        //
     }
 
     /**

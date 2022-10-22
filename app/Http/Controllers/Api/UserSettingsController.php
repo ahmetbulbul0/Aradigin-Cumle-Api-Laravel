@@ -19,7 +19,8 @@ class UserSettingsController extends Controller
      */
     public function index()
     {
-        return new UserSettingsCollection(UserSettings::where("is_deleted", false)->with("userData")->paginate());
+        $data = new UserSettingsCollection(UserSettings::where("is_deleted", false)->with("userData")->paginate());
+        return $data;
     }
 
     /**
@@ -44,17 +45,6 @@ class UserSettingsController extends Controller
         $no = $request->user_setting;
         $userSetting = UserSettings::where(["is_deleted" => false, "no" => $no])->with("userData")->first();
         return new UserSettingsResource($userSetting);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\UserSettings  $userSettings
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(UserSettings $userSettings)
-    {
-        //
     }
 
     /**

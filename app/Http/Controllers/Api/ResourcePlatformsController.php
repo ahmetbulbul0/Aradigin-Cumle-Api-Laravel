@@ -19,7 +19,8 @@ class ResourcePlatformsController extends Controller
      */
     public function index()
     {
-        return new ResourcePlatformsCollection(ResourcePlatforms::where("is_deleted", false)->with("resourceUrls", "news")->paginate());
+        $data = new ResourcePlatformsCollection(ResourcePlatforms::where("is_deleted", false)->with("resourceUrls", "news")->paginate());
+        return $data;
     }
 
     /**
@@ -44,17 +45,6 @@ class ResourcePlatformsController extends Controller
         $no = $request->resource_platform;
         $resourcePlatforms = ResourcePlatforms::where(["is_deleted" => false, "no" => $no])->with("resourceUrls", "news")->first();
         return new ResourcePlatformsResource($resourcePlatforms);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ResourcePlatforms  $resourcePlatforms
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ResourcePlatforms $resourcePlatforms)
-    {
-        //
     }
 
     /**

@@ -19,7 +19,7 @@ class CategoriesResource extends JsonResource
 
         $data["parentCategory"] = new CategoriesResource($this->whenLoaded("parentCategoryData"));
         $data["childrenCategories"] = CategoriesResource::collection($this->whenLoaded("childrenCategories"));
-        $data["news"] = NewsResource::collection($this->news);
+        $data["news"] = NewsResource::collection($this->whenLoaded("news"));
 
         return $data;
     }

@@ -19,7 +19,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        return new CategoriesCollection(Categories::where("is_deleted", false)->with("parentCategoryData", "childrenCategories")->paginate());
+        $data = new CategoriesCollection(Categories::where("is_deleted", false)->with("parentCategoryData", "childrenCategories", "news")->paginate());
+        return $data;
     }
 
     /**
@@ -42,19 +43,8 @@ class CategoriesController extends Controller
     public function show(Request $request)
     {
         $no = $request->category;
-        $category = Categories::where(["is_deleted" => false, "no" => $no])->with("parentCategoryData", "childrenCategories")->first();
+        $category = Categories::where(["is_deleted" => false, "no" => $no])->with("parentCategoryData", "childrenCategories", "news")->first();
         return new CategoriesResource($category);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Categories  $categories
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Categories $categories)
-    {
-        //
     }
 
     /**

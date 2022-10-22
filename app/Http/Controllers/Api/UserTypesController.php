@@ -19,7 +19,8 @@ class UserTypesController extends Controller
      */
     public function index()
     {
-        return new UserTypesCollection(UserTypes::where("is_deleted", false)->with("users", "permissionsData")->paginate());
+        $data = new UserTypesCollection(UserTypes::where("is_deleted", false)->with("users", "permissionsData")->paginate());
+        return $data;
     }
 
     /**
@@ -44,17 +45,6 @@ class UserTypesController extends Controller
         $no = $request->user_type;
         $userType = UserTypes::where(["is_deleted" => false, "no" => $no])->with("users", "permissionsData")->first();
         return new UserTypesResource($userType);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\UserTypes  $userTypes
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(UserTypes $userTypes)
-    {
-        //
     }
 
     /**

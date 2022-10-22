@@ -18,7 +18,7 @@ class UserTypesResource extends JsonResource
     {
         $data = UserTypesResourceData::get($this);
 
-        $data["permissions"] = new UserTypesUserTypePermissionsResource($this->permissionsData);
+        $data["permissions"] = new UserTypesUserTypePermissionsResource($this->whenLoaded("permissionsData"));
         $data["users"] = UsersResource::collection($this->whenLoaded("users"));
 
         return $data;

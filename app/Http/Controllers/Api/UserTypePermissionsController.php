@@ -19,7 +19,8 @@ class UserTypePermissionsController extends Controller
      */
     public function index()
     {
-        return new UserTypePermissionsCollection(UserTypePermissions::where("is_deleted", false)->paginate());
+        $data = new UserTypePermissionsCollection(UserTypePermissions::where("is_deleted", false)->with("userTypeData")->paginate());
+        return $data;
     }
 
     /**
@@ -42,19 +43,8 @@ class UserTypePermissionsController extends Controller
     public function show(Request $request)
     {
         $no = $request->user_type_permission;
-        $userTypePermission = UserTypePermissions::where(["is_deleted" => false, "no" => $no])->first();
+        $userTypePermission = UserTypePermissions::where(["is_deleted" => false, "no" => $no])->with("userTypeData")->first();
         return new UserTypePermissionsResource($userTypePermission);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\UserTypePermissions  $userTypePermissions
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(UserTypePermissions $userTypePermissions)
-    {
-        //
     }
 
     /**

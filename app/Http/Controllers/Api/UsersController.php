@@ -19,7 +19,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return new UsersCollection(Users::where("is_deleted", false)->with("typeData", "permissionsData", "settingsData", "news")->paginate());
+        $data = new UsersCollection(Users::where("is_deleted", false)->with("typeData", "permissionsData", "settingsData", "news")->paginate());
+        return $data;
     }
 
     /**
@@ -45,18 +46,7 @@ class UsersController extends Controller
         $user = Users::where(["is_deleted" => false, "no" => $no])->with("typeData", "permissionsData", "settingsData", "news")->first();
         return new UsersResource($user);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Users  $users
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Users $users)
-    {
-        //
-    }
-
+    
     /**
      * Update the specified resource in storage.
      *
