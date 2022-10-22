@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\UserSettings;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserSettingsCollection;
 use App\Http\Requests\StoreUserSettingsRequest;
 use App\Http\Requests\UpdateUserSettingsRequest;
+use App\Http\Resources\UserSettingsResource;
 
 class UserSettingsController extends Controller
 {
@@ -15,17 +19,8 @@ class UserSettingsController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $data = new UserSettingsCollection(UserSettings::where("is_deleted", false)->with("userData")->paginate());
+        return $data;
     }
 
     /**
@@ -45,20 +40,11 @@ class UserSettingsController extends Controller
      * @param  \App\Models\UserSettings  $userSettings
      * @return \Illuminate\Http\Response
      */
-    public function show(UserSettings $userSettings)
+    public function show(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\UserSettings  $userSettings
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(UserSettings $userSettings)
-    {
-        //
+        $no = $request->user_setting;
+        $userSetting = UserSettings::where(["is_deleted" => false, "no" => $no])->with("userData")->first();
+        return new UserSettingsResource($userSetting);
     }
 
     /**

@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
 use App\Models\ResourcePlatforms;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\ResourcePlatformsCollection;
 use App\Http\Requests\StoreResourcePlatformsRequest;
 use App\Http\Requests\UpdateResourcePlatformsRequest;
+use App\Http\Resources\ResourcePlatformsResource;
 
 class ResourcePlatformsController extends Controller
 {
@@ -15,17 +19,8 @@ class ResourcePlatformsController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $data = new ResourcePlatformsCollection(ResourcePlatforms::where("is_deleted", false)->with("resourceUrls", "news")->paginate());
+        return $data;
     }
 
     /**
@@ -45,20 +40,11 @@ class ResourcePlatformsController extends Controller
      * @param  \App\Models\ResourcePlatforms  $resourcePlatforms
      * @return \Illuminate\Http\Response
      */
-    public function show(ResourcePlatforms $resourcePlatforms)
+    public function show(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ResourcePlatforms  $resourcePlatforms
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ResourcePlatforms $resourcePlatforms)
-    {
-        //
+        $no = $request->resource_platform;
+        $resourcePlatforms = ResourcePlatforms::where(["is_deleted" => false, "no" => $no])->with("resourceUrls", "news")->first();
+        return new ResourcePlatformsResource($resourcePlatforms);
     }
 
     /**

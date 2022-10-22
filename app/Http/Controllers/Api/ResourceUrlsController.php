@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\ResourceUrls;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\ResourceUrlsCollection;
 use App\Http\Requests\StoreResourceUrlsRequest;
 use App\Http\Requests\UpdateResourceUrlsRequest;
+use App\Http\Resources\ResourceUrlsResource;
 
 class ResourceUrlsController extends Controller
 {
@@ -15,17 +19,8 @@ class ResourceUrlsController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $data = new ResourceUrlsCollection(ResourceUrls::where("is_deleted", false)->with("platformData", "news")->paginate());
+        return $data;
     }
 
     /**
@@ -45,20 +40,11 @@ class ResourceUrlsController extends Controller
      * @param  \App\Models\ResourceUrls  $resourceUrls
      * @return \Illuminate\Http\Response
      */
-    public function show(ResourceUrls $resourceUrls)
+    public function show(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ResourceUrls  $resourceUrls
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ResourceUrls $resourceUrls)
-    {
-        //
+        $no = $request->resource_url;
+        $resourceUrl = ResourceUrls::where(["is_deleted" => false, "no" => $no])->with("platformData", "news")->first();
+        return new ResourceUrlsResource($resourceUrl);
     }
 
     /**

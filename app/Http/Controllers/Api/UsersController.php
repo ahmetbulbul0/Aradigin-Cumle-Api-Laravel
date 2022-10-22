@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Users;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UsersCollection;
 use App\Http\Requests\StoreUsersRequest;
 use App\Http\Requests\UpdateUsersRequest;
+use App\Http\Resources\UsersResource;
 
 class UsersController extends Controller
 {
@@ -15,17 +19,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $data = new UsersCollection(Users::where("is_deleted", false)->with("typeData", "permissionsData", "settingsData", "news")->paginate());
+        return $data;
     }
 
     /**
@@ -45,22 +40,13 @@ class UsersController extends Controller
      * @param  \App\Models\Users  $users
      * @return \Illuminate\Http\Response
      */
-    public function show(Users $users)
+    public function show(Request $request)
     {
-        //
+        $no = $request->user;
+        $user = Users::where(["is_deleted" => false, "no" => $no])->with("typeData", "permissionsData", "settingsData", "news")->first();
+        return new UsersResource($user);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Users  $users
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Users $users)
-    {
-        //
-    }
-
+    
     /**
      * Update the specified resource in storage.
      *

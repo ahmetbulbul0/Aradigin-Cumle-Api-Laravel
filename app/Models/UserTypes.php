@@ -12,10 +12,10 @@ class UserTypes extends Model
     use HasFactory;
 
     public function users() {
-        return $this->belongsTo(Users::class, "type", "no");
+        return $this->hasMany(Users::class, "type", "no")->with("permissionsData", "settingsData");
     }
 
-    public function permissions() {
-        return $this->hasMany(UserTypePermissions::class, "user_type_no", "no");
+    public function permissionsData() {
+        return $this->hasOne(UserTypePermissions::class, "user_type_no", "no");
     }
 }

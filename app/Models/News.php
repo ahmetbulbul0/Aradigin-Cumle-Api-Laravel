@@ -13,29 +13,27 @@ class News extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = "no";
-
-    public function author() {
-        return $this->hasOne(Users::class, "no", "author")->with("type", "permissions", "settings");
+    public function authorData() {
+        return $this->hasOne(Users::class, "no", "author")->with("typeData", "permissionsData", "settingsData");
     }
 
-    public function category() {
-        return $this->hasOne(Categories::class, "no", "category")->with("parentCategory");
+    public function categoryData() {
+        return $this->hasOne(Categories::class, "no", "category")->with("parentCategoryData", "childrenCategories");
     }
 
-    public function resourcePlatform() {
+    public function resourcePlatformData() {
         return $this->hasOne(ResourcePlatforms::class, "no", "resource_platform");
     }
 
-    public function resourceUrl() {
-        return $this->hasOne(ResourceUrls::class, "no", "resource_url")->with("platform");
+    public function resourceUrlData() {
+        return $this->hasOne(ResourceUrls::class, "no", "resource_url");
     }
 
-    public function approvedBy() {
-        return $this->hasOne(Users::class, "no", "approved_by")->with("type", "permissions", "settings");
+    public function approvedByData() {
+        return $this->hasOne(Users::class, "no", "approved_by")->with("typeData", "permissionsData", "settingsData");
     }
 
-    public function rejectedBy() {
-        return $this->hasOne(Users::class, "no", "rejected_by")->with("type", "permissions", "settings");
+    public function rejectedByData() {
+        return $this->hasOne(Users::class, "no", "rejected_by")->with("typeData", "permissionsData", "settingsData");
     }
 }

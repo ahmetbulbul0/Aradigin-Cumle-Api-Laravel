@@ -12,19 +12,19 @@ class Users extends Model
 {
     use HasFactory;
 
-    public function type() {
-        return $this->hasOne(UserTypes::class, "no", "type");
+    public function typeData() {
+        return $this->hasOne(UserTypes::class, "no", "type")->with("permissionsData");
     }
 
-    public function permissions() {
-        return $this->hasOne(UserPermissions::class, "user_no", "no");
+    public function permissionsData() {
+    return $this->hasOne(UserPermissions::class, "user_no", "no");
     }
 
-    public function settings() {
+    public function settingsData() {
         return $this->hasOne(UserSettings::class, "user_no", "no");
     }
 
     public function news() {
-        return $this->belongsTo(News::class, "author", "no");
+        return $this->hasMany(News::class, "author", "no")->with("categoryData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData");
     }
 }

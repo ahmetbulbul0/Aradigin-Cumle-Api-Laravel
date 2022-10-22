@@ -10,7 +10,7 @@ class UserPermissions extends Model
 {
     use HasFactory;
 
-    public function user() {
-        return $this->hasOne(Users::class, "no", "user");
+    public function userData() {
+        return $this->hasOne(Users::class, "no", "user_no")->with("typeData", "settingsData");
     }
 }
