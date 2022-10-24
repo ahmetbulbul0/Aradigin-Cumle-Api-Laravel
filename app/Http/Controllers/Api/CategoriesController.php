@@ -9,6 +9,7 @@ use App\Http\Resources\CategoriesCollection;
 use App\Http\Requests\StoreCategoriesRequest;
 use App\Http\Requests\UpdateCategoriesRequest;
 use App\Http\Resources\CategoriesResource;
+use App\Http\Tools\RelationshipGenerator;
 
 class CategoriesController extends Controller
 {
@@ -17,9 +18,14 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = new CategoriesCollection(Categories::where("is_deleted", false)->with("parentCategoryData", "childrenCategories", "news")->paginate());
+        $data = new Categories();
+        $data = $data->where("is_deleted", false);
+        $data = RelationshipGenerator::addRelationship("parentCategoryData", $data);
+        $data = RelationshipGenerator::hasRelationshipInRequest($request, ["childrenCategories", "news"], $data);
+        $data = $data->paginate();
+        $data = new CategoriesCollection($data);
         return $data;
     }
 
