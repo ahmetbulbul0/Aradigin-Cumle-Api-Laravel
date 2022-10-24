@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UsersResource;
 use App\Http\Resources\UsersCollection;
 use App\Http\Requests\StoreUsersRequest;
 use App\Http\Requests\UpdateUsersRequest;
-use App\Http\Resources\UsersResource;
+use App\Http\Tools\RelationshipGenerator;
 
 class UsersController extends Controller
 {
@@ -17,9 +18,14 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = new UsersCollection(Users::where("is_deleted", false)->with("typeData", "permissionsData", "settingsData", "news")->paginate());
+        $data = new Users();
+        $data = $data->where("is_deleted", false);
+        $data = RelationshipGenerator::addRelationship(["typeData", "permissionsData", "settingsData"], $data);
+        $data = RelationshipGenerator::hasRelationshipInRequest($request, "news", $data);
+        $data = $data->paginate();
+        $data = new UsersCollection($data);
         return $data;
     }
 
@@ -46,7 +52,7 @@ class UsersController extends Controller
         $user = Users::where(["is_deleted" => false, "no" => $no])->with("typeData", "permissionsData", "settingsData", "news")->first();
         return new UsersResource($user);
     }
-    
+
     /**
      * Update the specified resource in storage.
      *

@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Models\News;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\NewsResource;
 use App\Http\Resources\NewsCollection;
 use App\Http\Requests\StoreNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
-use App\Http\Resources\NewsResource;
+use App\Http\Tools\RelationshipGenerator;
 
 class NewsController extends Controller
 {
@@ -19,7 +20,11 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $data = new NewsCollection(News::where("is_deleted", false)->with("authorData", "categoryData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData")->paginate());
+        $data = new News();
+        $data = $data->where("is_deleted", false);
+        $data = RelationshipGenerator::addRelationship(["authorData", "categoryData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData"], $data);
+        $data = $data->paginate();
+        $data = new NewsCollection($data);
         return $data;
     }
 

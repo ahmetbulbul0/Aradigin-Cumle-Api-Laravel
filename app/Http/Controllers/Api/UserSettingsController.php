@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Models\UserSettings;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Tools\RelationshipGenerator;
+use App\Http\Resources\UserSettingsResource;
 use App\Http\Resources\UserSettingsCollection;
 use App\Http\Requests\StoreUserSettingsRequest;
 use App\Http\Requests\UpdateUserSettingsRequest;
-use App\Http\Resources\UserSettingsResource;
 
 class UserSettingsController extends Controller
 {
@@ -19,7 +20,11 @@ class UserSettingsController extends Controller
      */
     public function index()
     {
-        $data = new UserSettingsCollection(UserSettings::where("is_deleted", false)->with("userData")->paginate());
+        $data = new UserSettings();
+        $data = $data->where("is_deleted", false);
+        $data = RelationshipGenerator::addRelationship("userData", $data);
+        $data = $data->paginate();
+        $data = new UserSettingsCollection($data);
         return $data;
     }
 

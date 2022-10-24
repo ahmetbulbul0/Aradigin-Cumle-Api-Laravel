@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\UserTypes;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserTypesResource;
+use App\Http\Tools\RelationshipGenerator;
+use App\Http\Resources\UserTypesCollection;
 use App\Http\Requests\StoreUserTypesRequest;
 use App\Http\Requests\UpdateUserTypesRequest;
-use App\Http\Resources\UserTypesCollection;
-use App\Http\Resources\UserTypesResource;
-use Illuminate\Http\Request;
 
 class UserTypesController extends Controller
 {
@@ -17,9 +18,14 @@ class UserTypesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = new UserTypesCollection(UserTypes::where("is_deleted", false)->with("users", "permissionsData")->paginate());
+        $data = new UserTypes();
+        $data = $data->where("is_deleted", false);
+        $data = RelationshipGenerator::addRelationship("permissionsData", $data);
+        $data = RelationshipGenerator::hasRelationshipInRequest($request, "users", $data);
+        $data = $data->paginate();
+        $data = new UserTypesCollection($data);
         return $data;
     }
 

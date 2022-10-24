@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Models\ResourceUrls;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Tools\RelationshipGenerator;
+use App\Http\Resources\ResourceUrlsResource;
 use App\Http\Resources\ResourceUrlsCollection;
 use App\Http\Requests\StoreResourceUrlsRequest;
 use App\Http\Requests\UpdateResourceUrlsRequest;
-use App\Http\Resources\ResourceUrlsResource;
 
 class ResourceUrlsController extends Controller
 {
@@ -17,9 +18,14 @@ class ResourceUrlsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = new ResourceUrlsCollection(ResourceUrls::where("is_deleted", false)->with("platformData", "news")->paginate());
+        $data = new ResourceUrls();
+        $data = $data->where("is_deleted", false);
+        $data = RelationshipGenerator::addRelationship("platformData", $data);
+        $data = RelationshipGenerator::hasRelationshipInRequest($request, "news", $data);
+        $data = $data->paginate();
+        $data = new ResourceUrlsCollection($data);
         return $data;
     }
 

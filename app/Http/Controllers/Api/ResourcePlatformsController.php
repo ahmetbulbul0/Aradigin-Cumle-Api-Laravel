@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Models\ResourcePlatforms;
 use App\Http\Controllers\Controller;
+use App\Http\Tools\RelationshipGenerator;
+use App\Http\Resources\ResourcePlatformsResource;
 use App\Http\Resources\ResourcePlatformsCollection;
 use App\Http\Requests\StoreResourcePlatformsRequest;
 use App\Http\Requests\UpdateResourcePlatformsRequest;
-use App\Http\Resources\ResourcePlatformsResource;
 
 class ResourcePlatformsController extends Controller
 {
@@ -17,9 +18,13 @@ class ResourcePlatformsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = new ResourcePlatformsCollection(ResourcePlatforms::where("is_deleted", false)->with("resourceUrls", "news")->paginate());
+        $data = new ResourcePlatforms();
+        $data = $data->where("is_deleted", false);
+        $data = RelationshipGenerator::hasRelationshipInRequest($request, ["resourceUrls", "news"], $data);
+        $data = $data->paginate();
+        $data = new ResourcePlatformsCollection($data);
         return $data;
     }
 

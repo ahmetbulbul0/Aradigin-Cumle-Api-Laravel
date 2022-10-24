@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Models\UserPermissions;
 use App\Http\Controllers\Controller;
+use App\Http\Tools\RelationshipGenerator;
+use App\Http\Resources\UserPermissionsResource;
 use App\Http\Resources\UserPermissionsCollection;
 use App\Http\Requests\StoreUserPermissionsRequest;
 use App\Http\Requests\UpdateUserPermissionsRequest;
-use App\Http\Resources\UserPermissionsResource;
 
 class UserPermissionsController extends Controller
 {
@@ -19,7 +20,11 @@ class UserPermissionsController extends Controller
      */
     public function index()
     {
-        $data = new UserPermissionsCollection(UserPermissions::where("is_deleted", false)->with("userData")->paginate());
+        $data = new UserPermissions();
+        $data = $data->where("is_deleted", false);
+        $data = RelationshipGenerator::addRelationship("userData", $data);
+        $data = $data->paginate();
+        $data = new UserPermissionsCollection($data);
         return $data;
     }
 

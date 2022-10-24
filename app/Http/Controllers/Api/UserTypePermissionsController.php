@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Models\UserTypePermissions;
 use App\Http\Controllers\Controller;
+use App\Http\Tools\RelationshipGenerator;
+use App\Http\Resources\UserTypePermissionsResource;
 use App\Http\Resources\UserTypePermissionsCollection;
 use App\Http\Requests\StoreUserTypePermissionsRequest;
 use App\Http\Requests\UpdateUserTypePermissionsRequest;
-use App\Http\Resources\UserTypePermissionsResource;
 
 class UserTypePermissionsController extends Controller
 {
@@ -19,7 +20,11 @@ class UserTypePermissionsController extends Controller
      */
     public function index()
     {
-        $data = new UserTypePermissionsCollection(UserTypePermissions::where("is_deleted", false)->with("userTypeData")->paginate());
+        $data = new UserTypePermissions();
+        $data = $data->where("is_deleted", false);
+        $data = RelationshipGenerator::addRelationship("userTypeData", $data);
+        $data = $data->paginate();
+        $data = new UserTypePermissionsCollection($data);
         return $data;
     }
 
