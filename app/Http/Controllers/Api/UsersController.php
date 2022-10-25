@@ -49,8 +49,13 @@ class UsersController extends Controller
     public function show(Request $request)
     {
         $no = $request->user;
-        $user = Users::where(["is_deleted" => false, "no" => $no])->with("typeData", "permissionsData", "settingsData", "news")->first();
-        return new UsersResource($user);
+        $data = new Users();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $data = RelationshipGenerator::addRelationship(["typeData", "permissionsData", "settingsData"], $data);
+        $data = RelationshipGenerator::hasRelationshipInRequest($request, "news", $data);
+        $data = $data->first();
+        $data = new UsersResource($data);
+        return $data;
     }
 
     /**

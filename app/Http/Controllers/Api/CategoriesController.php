@@ -49,8 +49,12 @@ class CategoriesController extends Controller
     public function show(Request $request)
     {
         $no = $request->category;
-        $category = Categories::where(["is_deleted" => false, "no" => $no])->with("parentCategoryData", "childrenCategories", "news")->first();
-        return new CategoriesResource($category);
+        $data = new Categories();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $data = RelationshipGenerator::addRelationship("parentCategoryData", $data);
+        $data = RelationshipGenerator::hasRelationshipInRequest($request, ["childrenCategories", "news"], $data);
+        $data = $data->first();
+        return new CategoriesResource($data);
     }
 
     /**

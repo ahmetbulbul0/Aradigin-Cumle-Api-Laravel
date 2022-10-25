@@ -49,8 +49,13 @@ class UserTypesController extends Controller
     public function show(Request $request)
     {
         $no = $request->user_type;
-        $userType = UserTypes::where(["is_deleted" => false, "no" => $no])->with("users", "permissionsData")->first();
-        return new UserTypesResource($userType);
+        $data = new UserTypes();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $data = RelationshipGenerator::addRelationship("permissionsData", $data);
+        $data = RelationshipGenerator::hasRelationshipInRequest($request, "users", $data);
+        $data = $data->first();
+        $data = new UserTypesResource($data);
+        return $data;
     }
 
     /**

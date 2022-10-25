@@ -48,8 +48,12 @@ class UserPermissionsController extends Controller
     public function show(Request $request)
     {
         $no = $request->user_permission;
-        $userPermission = UserPermissions::where(["is_deleted" => false, "no" => $no])->with("userData")->first();
-        return new UserPermissionsResource($userPermission);
+        $data = new UserPermissions();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $data = RelationshipGenerator::addRelationship("userData", $data);
+        $data = $data->first();
+        $data = new UserPermissionsResource($data);
+        return $data;
     }
 
     /**

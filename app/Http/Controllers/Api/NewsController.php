@@ -18,12 +18,12 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data = new News();
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship(["authorData", "categoryData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData"], $data);
-        $data = $data->paginate();
+        $data = $request->limit ? $data->paginate($request->limit) : $data->paginate();
         $data = new NewsCollection($data);
         return $data;
     }
@@ -47,9 +47,13 @@ class NewsController extends Controller
      */
     public function show(Request $request)
     {
-        $no = $request->news;
-        $news = News::where(["is_deleted" => false, "no" => $no])->with("authorData", "categoryData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData")->first();
-        return new NewsResource($news);
+        $slug = $request->news;
+        $data = new News();
+        $data = $data->where(["is_deleted" => false, "slug" => $slug]);
+        $data = RelationshipGenerator::addRelationship(["authorData", "categoryData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData"], $data);
+        $data = $data->first();
+        $data = new NewsResource($data);
+        return $data;
     }
 
     /**

@@ -49,8 +49,13 @@ class ResourceUrlsController extends Controller
     public function show(Request $request)
     {
         $no = $request->resource_url;
-        $resourceUrl = ResourceUrls::where(["is_deleted" => false, "no" => $no])->with("platformData", "news")->first();
-        return new ResourceUrlsResource($resourceUrl);
+        $data = new ResourceUrls();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $data = RelationshipGenerator::addRelationship("platformData", $data);
+        $data = RelationshipGenerator::hasRelationshipInRequest($request, "news", $data);
+        $data = $data->first();
+        $data = new ResourceUrlsResource($data);
+        return $data;
     }
 
     /**

@@ -48,8 +48,12 @@ class ResourcePlatformsController extends Controller
     public function show(Request $request)
     {
         $no = $request->resource_platform;
-        $resourcePlatforms = ResourcePlatforms::where(["is_deleted" => false, "no" => $no])->with("resourceUrls", "news")->first();
-        return new ResourcePlatformsResource($resourcePlatforms);
+        $data = new ResourcePlatforms();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $data = RelationshipGenerator::hasRelationshipInRequest($request, ["resourceUrls", "news"], $data);
+        $data = $data->first();
+        $data = new ResourcePlatformsResource($data);
+        return $data;
     }
 
     /**

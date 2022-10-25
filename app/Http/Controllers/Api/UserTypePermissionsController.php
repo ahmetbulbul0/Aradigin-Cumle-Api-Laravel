@@ -48,8 +48,12 @@ class UserTypePermissionsController extends Controller
     public function show(Request $request)
     {
         $no = $request->user_type_permission;
-        $userTypePermission = UserTypePermissions::where(["is_deleted" => false, "no" => $no])->with("userTypeData")->first();
-        return new UserTypePermissionsResource($userTypePermission);
+        $data = new UserTypePermissions();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $data = RelationshipGenerator::addRelationship("userTypeData", $data);
+        $data = $data->first();
+        $data = new UserTypePermissionsResource($data);
+        return $data;
     }
 
     /**

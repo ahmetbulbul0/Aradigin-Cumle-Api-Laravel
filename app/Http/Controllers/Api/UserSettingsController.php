@@ -48,8 +48,12 @@ class UserSettingsController extends Controller
     public function show(Request $request)
     {
         $no = $request->user_setting;
-        $userSetting = UserSettings::where(["is_deleted" => false, "no" => $no])->with("userData")->first();
-        return new UserSettingsResource($userSetting);
+        $data = new UserSettings();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $data = RelationshipGenerator::addRelationship("userData", $data);
+        $data = $data->first();
+        $data = new UserSettingsResource($data);
+        return $data;
     }
 
     /**
