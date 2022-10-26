@@ -24,9 +24,15 @@ class UserPermissionsController extends Controller
         $data = new UserPermissions();
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship("userData", $data);
-        $data = LimitGenerator::generateLimitAndGet($request, $data);
+        $data = LimitGenerator::generateLimitAndPaginate($request, $data);
+        $pagination = $data["pagination"];
+        $data = $data["data"];
         $data = new UserPermissionsCollection($data);
-        return $data;
+        $response = [
+            "data" => $data,
+            "pagination" => $pagination
+        ];
+        return $response;
     }
 
     /**

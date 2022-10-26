@@ -25,6 +25,7 @@ class CategoriesController extends Controller
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship("parentCategoryData", $data);
         $data = RelationshipGenerator::hasRelationshipInRequest($request, ["childrenCategories", "news"], $data);
+
         $data = LimitGenerator::generateLimitAndPaginate($request, $data);
         $pagination = $data["pagination"];
         $data = $data["data"];

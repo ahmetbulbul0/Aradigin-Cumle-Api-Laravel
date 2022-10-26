@@ -25,9 +25,15 @@ class ResourceUrlsController extends Controller
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship("platformData", $data);
         $data = RelationshipGenerator::hasRelationshipInRequest($request, "news", $data);
-        $data = LimitGenerator::generateLimitAndGet($request, $data);
+        $data = LimitGenerator::generateLimitAndPaginate($request, $data);
+        $pagination = $data["pagination"];
+        $data = $data["data"];
         $data = new ResourceUrlsCollection($data);
-        return $data;
+        $response = [
+            "data" => $data,
+            "pagination" => $pagination
+        ];
+        return $response;
     }
 
     /**

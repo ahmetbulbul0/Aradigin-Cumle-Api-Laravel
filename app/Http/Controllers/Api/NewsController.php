@@ -24,9 +24,15 @@ class NewsController extends Controller
         $data = new News();
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship(["authorData", "categoryData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData"], $data);
-        $data = LimitGenerator::generateLimitAndGet($request, $data);
+        $data = LimitGenerator::generateLimitAndPaginate($request, $data);
+        $pagination = $data["pagination"];
+        $data = $data["data"];
         $data = new NewsCollection($data);
-        return $data;
+        $response = [
+            "data" => $data,
+            "pagination" => $pagination
+        ];
+        return $response;
     }
 
     /**

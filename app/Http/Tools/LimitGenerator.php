@@ -35,10 +35,20 @@ class LimitGenerator extends Controller
                 } else {
                     $page = 1;
                 }
-                $data = PaginateGenerator::paginate($data, $page, $limit);
+                $response = PaginateGenerator::paginate($data, $page, $limit);
+            } else {
+                $response = [
+                    "data" => $data->get(),
+                    "pagination" => null
+                ];
             }
+        } else {
+            $response = [
+                "data" => $data->get(),
+                "pagination" => null
+            ];
         }
-        return $data;
+        return $response;
     }
 
 }
