@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\ResourceUrls;
 use Illuminate\Http\Request;
+use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
 use App\Http\Tools\RelationshipGenerator;
 use App\Http\Resources\ResourceUrlsResource;
@@ -24,7 +25,7 @@ class ResourceUrlsController extends Controller
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship("platformData", $data);
         $data = RelationshipGenerator::hasRelationshipInRequest($request, "news", $data);
-        $data = $data->paginate();
+        $data = LimitGenerator::generateLimitAndGet($request, $data);
         $data = new ResourceUrlsCollection($data);
         return $data;
     }

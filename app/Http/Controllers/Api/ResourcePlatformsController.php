@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Models\ResourcePlatforms;
+use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
 use App\Http\Tools\RelationshipGenerator;
 use App\Http\Resources\ResourcePlatformsResource;
@@ -23,7 +24,7 @@ class ResourcePlatformsController extends Controller
         $data = new ResourcePlatforms();
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::hasRelationshipInRequest($request, ["resourceUrls", "news"], $data);
-        $data = $data->paginate();
+        $data = LimitGenerator::generateLimitAndGet($request, $data);
         $data = new ResourcePlatformsCollection($data);
         return $data;
     }

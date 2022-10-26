@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Users;
 use Illuminate\Http\Request;
+use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UsersResource;
 use App\Http\Resources\UsersCollection;
@@ -24,7 +25,7 @@ class UsersController extends Controller
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship(["typeData", "permissionsData", "settingsData"], $data);
         $data = RelationshipGenerator::hasRelationshipInRequest($request, "news", $data);
-        $data = $data->paginate();
+        $data = LimitGenerator::generateLimitAndGet($request, $data);
         $data = new UsersCollection($data);
         return $data;
     }

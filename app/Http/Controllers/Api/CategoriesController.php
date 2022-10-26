@@ -9,6 +9,7 @@ use App\Http\Resources\CategoriesCollection;
 use App\Http\Requests\StoreCategoriesRequest;
 use App\Http\Requests\UpdateCategoriesRequest;
 use App\Http\Resources\CategoriesResource;
+use App\Http\Tools\LimitGenerator;
 use App\Http\Tools\RelationshipGenerator;
 
 class CategoriesController extends Controller
@@ -24,7 +25,7 @@ class CategoriesController extends Controller
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship("parentCategoryData", $data);
         $data = RelationshipGenerator::hasRelationshipInRequest($request, ["childrenCategories", "news"], $data);
-        $data = $data->paginate();
+        $data = LimitGenerator::generateLimitAndGet($request, $data);
         $data = new CategoriesCollection($data);
         return $data;
     }

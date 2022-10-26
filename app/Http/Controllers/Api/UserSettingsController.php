@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\UserSettings;
 use Illuminate\Http\Request;
+use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
 use App\Http\Tools\RelationshipGenerator;
 use App\Http\Resources\UserSettingsResource;
@@ -18,12 +19,12 @@ class UserSettingsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data = new UserSettings();
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship("userData", $data);
-        $data = $data->paginate();
+        $data = LimitGenerator::generateLimitAndGet($request, $data);
         $data = new UserSettingsCollection($data);
         return $data;
     }

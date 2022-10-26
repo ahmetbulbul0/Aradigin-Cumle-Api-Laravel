@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\NewsResource;
 use App\Http\Resources\NewsCollection;
@@ -23,7 +24,7 @@ class NewsController extends Controller
         $data = new News();
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship(["authorData", "categoryData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData"], $data);
-        $data = $request->limit ? $data->paginate($request->limit) : $data->paginate();
+        $data = LimitGenerator::generateLimitAndGet($request, $data);
         $data = new NewsCollection($data);
         return $data;
     }

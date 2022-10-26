@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Http\Tools\LimitGenerator;
 use App\Models\UserTypePermissions;
 use App\Http\Controllers\Controller;
 use App\Http\Tools\RelationshipGenerator;
@@ -18,12 +19,12 @@ class UserTypePermissionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data = new UserTypePermissions();
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship("userTypeData", $data);
-        $data = $data->paginate();
+        $data = LimitGenerator::generateLimitAndGet($request, $data);
         $data = new UserTypePermissionsCollection($data);
         return $data;
     }

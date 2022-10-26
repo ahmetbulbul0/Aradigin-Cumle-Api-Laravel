@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\UserTypes;
 use Illuminate\Http\Request;
+use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserTypesResource;
 use App\Http\Tools\RelationshipGenerator;
@@ -24,7 +25,7 @@ class UserTypesController extends Controller
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship("permissionsData", $data);
         $data = RelationshipGenerator::hasRelationshipInRequest($request, "users", $data);
-        $data = $data->paginate();
+        $data = LimitGenerator::generateLimitAndGet($request, $data);
         $data = new UserTypesCollection($data);
         return $data;
     }
