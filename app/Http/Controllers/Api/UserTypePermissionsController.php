@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Tools\LimitGenerator;
 use App\Models\UserTypePermissions;
 use App\Http\Controllers\Controller;
+use App\Http\Tools\EloquentGenerator;
+use App\Http\Tools\SortingListGenerator;
 use App\Http\Tools\RelationshipGenerator;
 use App\Http\Resources\UserTypePermissionsResource;
 use App\Http\Resources\UserTypePermissionsCollection;
@@ -24,6 +26,7 @@ class UserTypePermissionsController extends Controller
         $data = new UserTypePermissions();
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship("userTypeData", $data);
+        $data = $this->sorting($request, $data);
         $data = LimitGenerator::generateLimitAndPaginate($request, $data);
         $pagination = $data["pagination"];
         $data = $data["data"];
@@ -33,6 +36,21 @@ class UserTypePermissionsController extends Controller
             "pagination" => $pagination
         ];
         return $response;
+    }
+
+    public function sorting($request, $data)
+    {
+        if ($request->sorting) {
+            $sortingNames = [
+                'no09',
+                'no90',
+                "userTypeNoAZ",
+                "userTypeNoZA"
+            ];
+            $sortingList = SortingListGenerator::sortingListGenerate($sortingNames);
+            $data = EloquentGenerator::orderByWithSortingList($request, $data, $sortingList);
+        }
+        return $data;
     }
 
     /**

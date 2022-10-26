@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UsersResource;
+use App\Http\Tools\EloquentGenerator;
 use App\Http\Resources\UsersCollection;
 use App\Http\Requests\StoreUsersRequest;
+use App\Http\Tools\SortingListGenerator;
 use App\Http\Requests\UpdateUsersRequest;
 use App\Http\Tools\RelationshipGenerator;
 
@@ -25,6 +27,7 @@ class UsersController extends Controller
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship(["typeData", "permissionsData", "settingsData"], $data);
         $data = RelationshipGenerator::hasRelationshipInRequest($request, "news", $data);
+        $data = $this->sorting($request, $data);
         $data = LimitGenerator::generateLimitAndPaginate($request, $data);
         $pagination = $data["pagination"];
         $data = $data["data"];
@@ -34,6 +37,31 @@ class UsersController extends Controller
             "pagination" => $pagination
         ];
         return $response;
+    }
+
+    public function sorting($request, $data)
+    {
+        if ($request->sorting) {
+            $sortingNames = [
+                'no09',
+                'no90',
+                "usernameAZ",
+                "usernameZA",
+                "fullNameAZ",
+                "fullNameZA",
+                "passwordAZ",
+                "passwordZA",
+                "typeAZ",
+                "typeZA",
+                "settingsAZ",
+                "settingsZA",
+                "permissionsAZ",
+                "permissionsZA"
+            ];
+            $sortingList = SortingListGenerator::sortingListGenerate($sortingNames);
+            $data = EloquentGenerator::orderByWithSortingList($request, $data, $sortingList);
+        }
+        return $data;
     }
 
     /**

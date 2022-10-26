@@ -6,6 +6,8 @@ use App\Models\UserSettings;
 use Illuminate\Http\Request;
 use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
+use App\Http\Tools\EloquentGenerator;
+use App\Http\Tools\SortingListGenerator;
 use App\Http\Tools\RelationshipGenerator;
 use App\Http\Resources\UserSettingsResource;
 use App\Http\Resources\UserSettingsCollection;
@@ -24,6 +26,7 @@ class UserSettingsController extends Controller
         $data = new UserSettings();
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship("userData", $data);
+        $data = $this->sorting($request, $data);
         $data = LimitGenerator::generateLimitAndPaginate($request, $data);
         $pagination = $data["pagination"];
         $data = $data["data"];
@@ -33,6 +36,29 @@ class UserSettingsController extends Controller
             "pagination" => $pagination
         ];
         return $response;
+    }
+
+    public function sorting($request, $data)
+    {
+        if ($request->sorting) {
+            $sortingNames = [
+                'no09',
+                'no90',
+                "userNoAZ",
+                "userNoZA",
+                "isPublicAZ",
+                "isPublicZA",
+                "profilePhotoAZ",
+                "profilePhotoZA",
+                "websiteThemeAZ",
+                "websiteThemeZA",
+                "dashboardThemeAZ",
+                "dashboardThemeZA"
+            ];
+            $sortingList = SortingListGenerator::sortingListGenerate($sortingNames);
+            $data = EloquentGenerator::orderByWithSortingList($request, $data, $sortingList);
+        }
+        return $data;
     }
 
     /**

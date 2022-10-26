@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\ResourcePlatforms;
 use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
+use App\Http\Tools\EloquentGenerator;
+use App\Http\Tools\SortingListGenerator;
 use App\Http\Tools\RelationshipGenerator;
 use App\Http\Resources\ResourcePlatformsResource;
 use App\Http\Resources\ResourcePlatformsCollection;
@@ -24,6 +26,7 @@ class ResourcePlatformsController extends Controller
         $data = new ResourcePlatforms();
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::hasRelationshipInRequest($request, ["resourceUrls", "news"], $data);
+        $data = $this->sorting($request, $data);
         $data = LimitGenerator::generateLimitAndPaginate($request, $data);
         $pagination = $data["pagination"];
         $data = $data["data"];
@@ -33,6 +36,25 @@ class ResourcePlatformsController extends Controller
             "pagination" => $pagination
         ];
         return $response;
+    }
+
+    public function sorting($request, $data)
+    {
+        if ($request->sorting) {
+            $sortingNames = [
+                'no09',
+                'no90',
+                "nameAZ",
+                "nameZA",
+                "mainUrlAZ",
+                "mainUrlZA",
+                "slugAZ",
+                "slugZA"
+            ];
+            $sortingList = SortingListGenerator::sortingListGenerate($sortingNames);
+            $data = EloquentGenerator::orderByWithSortingList($request, $data, $sortingList);
+        }
+        return $data;
     }
 
     /**

@@ -30,6 +30,7 @@ class RelationshipGenerator extends Controller
         }
         return $data;
     }
+
     static function addRelationship($relationships, $data)
     {
         switch (gettype($relationships)) {
