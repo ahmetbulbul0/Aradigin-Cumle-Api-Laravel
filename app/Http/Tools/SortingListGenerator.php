@@ -11,35 +11,42 @@ class SortingListGenerator extends Controller
     {
         foreach ($sortingNames as $name) {
             if (Str::endsWith($name, "09")) {
-                $listTypes[] = [
+                $sortingListItem = [
                     "requestName" => $name,
-                    "column" => Str::remove('09', Str::snake($name)),
+                    "column" => Str::remove('09', $name),
                     "dbSortingType" => "ASC"
                 ];
+                $sortingListItem["column"] = Str::snake($sortingListItem["column"]);
+                $sortingList[] = $sortingListItem;
             }
             if (Str::endsWith($name, "90")) {
-                $listTypes[] = [
+                $sortingListItem = [
                     "requestName" => $name,
-                    "column" => Str::remove('90', Str::snake($name)),
+                    "column" => Str::remove('90', $name),
                     "dbSortingType" => "DESC"
                 ];
+                $sortingListItem["column"] = Str::snake($sortingListItem["column"]);
+                $sortingList[] = $sortingListItem;
             }
             if (Str::endsWith($name, "AZ")) {
-                $listTypes[] = [
+                $sortingListItem = [
                     "requestName" => $name,
-                    "column" => Str::remove('AZ', Str::snake($name)),
+                    "column" => Str::remove('AZ', $name),
                     "dbSortingType" => "ASC"
                 ];
+                $sortingListItem["column"] = Str::snake($sortingListItem["column"]);
+                $sortingList[] = $sortingListItem;
             }
             if (Str::endsWith($name, "ZA")) {
-                $listTypes[] = [
+                $sortingListItem = [
                     "requestName" => $name,
-                    "column" => Str::remove('ZA', Str::snake($name)),
+                    "column" => Str::remove('ZA', $name),
                     "dbSortingType" => "DESC"
                 ];
+                $sortingListItem["column"] = Str::snake($sortingListItem["column"]);
+                $sortingList[] = $sortingListItem;
             }
         }
-
-        return $listTypes;
+        return $sortingList;
     }
 }
