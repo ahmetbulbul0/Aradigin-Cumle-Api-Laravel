@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\NewsResource;
+use App\Http\Tools\EloquentGenerator;
 use App\Http\Resources\NewsCollection;
 use App\Http\Requests\StoreNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
+use App\Http\Tools\SortingListGenerator;
 use App\Http\Tools\RelationshipGenerator;
 
 class NewsController extends Controller
@@ -23,8 +26,64 @@ class NewsController extends Controller
         $data = new News();
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship(["authorData", "categoryData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData"], $data);
-        $data = $request->limit ? $data->paginate($request->limit) : $data->paginate();
+        $data = $this->sorting($request, $data);
+        $data = LimitGenerator::generateLimitAndPaginate($request, $data);
+        $pagination = $data["pagination"];
+        $data = $data["data"];
         $data = new NewsCollection($data);
+        $response = [
+            "data" => $data,
+            "pagination" => $pagination
+        ];
+        return $response;
+    }
+
+    public function sorting($request, $data)
+    {
+        if ($request->sorting) {
+            $sortingNames = [
+                'no09',
+                'no90',
+                "titleAZ",
+                "titleZA",
+                "contentAZ",
+                "contentZA",
+                "authorAZ",
+                "authorZA",
+                "categoryAZ",
+                "categoryZA",
+                "resourcePlatformAZ",
+                "resourcePlatformZA",
+                "resourceUrlAZ",
+                "resourceUrlZA",
+                "addedTime09",
+                "addedTime90",
+                "publishStatusAZ",
+                "publishStatusZA",
+                "publishDate09",
+                "publishDate90",
+                "statusAZ",
+                "statusZA",
+                "slugAZ",
+                "slugZA",
+                "isApproved09",
+                "isApproved90",
+                "approvedAt09",
+                "approvedAt90",
+                "approvedByAZ",
+                "approvedByZA",
+                "isRejected09",
+                "isRejected90",
+                "rejectedAt09",
+                "rejectedAt90",
+                "rejectedByAZ",
+                "rejectedByZA",
+                "rejectedReasonAZ",
+                "rejectedReasonZA"
+            ];
+            $sortingList = SortingListGenerator::sortingListGenerate($sortingNames);
+            $data = EloquentGenerator::orderByWithSortingList($request, $data, $sortingList);
+        }
         return $data;
     }
 

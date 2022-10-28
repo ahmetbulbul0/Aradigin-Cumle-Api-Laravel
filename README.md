@@ -1,66 +1,274 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Aradigin-Cumle-Api
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**_Aradigin Cumle Api Project_**
 
-## About Laravel
+## Technologies
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   **Laravel**
+-   **Php**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Project Setup Process
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Install composer (for php packages)
 
-## Learning Laravel
+```sh
+composer install
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Create .env file
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```sh
+1. duplicate the ".env.example" in main folder
+2. rename the file you copied to ".env"
+3. configure the ".env" file you renamed
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Create app key
 
-## Laravel Sponsors
+```sh
+php artisan key:generate
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Run migrations (for create database tables)
 
-### Premium Partners
+```sh
+php artisan migrate
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### Run seeders (for test datas, example: users, news, categories...)
 
-## Contributing
+```sh
+php artisan db:seed
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Run project
 
-## Code of Conduct
+```sh
+php artisan serve
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## **Api Documentation**
 
-## Security Vulnerabilities
+### **_User Types_**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+-   _Controller_: UserTypesController
+-   _Model_: UserTypes
+-   _Database_: user_types
+-   _Collection_: UserTypesCollection
+-   _Resource_: UserTypesResource
+-   _Main Route_: /api/user-types
 
-## License
+> **Routes**
+>
+> -   /api/user-types
+>
+>     -   Parameters:
+>         -   hasUsers (optional)
+>             -   value: everything
+>         -   sorting (optional)
+>             -   value: only available values [no09, no90, nameAZ, nameZA, slugAZ, slugZA, permissionsAZ, permissionsZA]
+>         -   page (optional)
+>             -   value: numeric values
+>
+> -   /api/user-types/:userTypeNo
+>     -   Parameters:
+>         -   hasUsers (optional)
+>             -   value: everything
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### **_User Type Permissions_**
+
+-   _Controller_: UserTypePermissionsController
+-   _Model_: UserTypePermissions
+-   _Database_: user_type_permissions
+-   _Collection_: UserTypePermissionsCollection
+-   _Resource_: UserTypePermissionsResource
+-   _Main Route_: /api/user-type-permissions
+
+> **Routes**
+>
+> -   /api/user-type-permissions
+>
+>     -   Parameters:
+>         -   sorting (optional)
+>             -   value: only available values [no09, no90, userTypeNoAZ, userTypeNoZA]
+>         -   page (optional)
+>             -   value: numeric values
+>
+> -   /api/user-type-permissions/:userTypeNo
+
+### **_Users_**
+
+-   _Controller_: UsersController
+-   _Model_: Users
+-   _Database_: users
+-   _Collection_: UsersCollection
+-   _Resource_: UsersResource
+-   _Main Route_: /api/users
+
+> **Routes**
+>
+> -   /api/users
+>
+>     -   Parameters:
+>         -   hasNews (optional)
+>             -   value: everything
+>         -   sorting (optional)
+>             -   value: only available values [no09, no90, usernameAZ, usernameZA, fullNameAZ, fullNameZA, passwordAZ, passwordZA, typeAZ, typeZA, settingsAZ, settingsZA, permissionsAZ, permissionsZA]
+>         -   page (optional)
+>             -   value: numeric values
+>
+> -   /api/users/:userTypeNo
+>     -   Parameters:
+>         -   hasNews (optional)
+>             -   value: everything
+
+### **_User Permissions_**
+
+-   _Controller_: UserPermissionsController
+-   _Model_: UserPermissions
+-   _Database_: user_permissions
+-   _Collection_: UserPermissionsCollection
+-   _Resource_: UserPermissionsResource
+-   _Main Route_: /api/user-permissions
+
+> **Routes**
+>
+> -   /api/user-permissions
+>
+>     -   Parameters:
+>         -   sorting (optional)
+>             -   value: only available values [no09, no90, userNoAZ, userNoZA, isBannedAZ, isBannedZA]
+>         -   page (optional)
+>             -   value: numeric values
+>
+> -   /api/user-permissions/:userTypeNo
+
+### **_User Settings_**
+
+-   _Controller_: UserSettingsController
+-   _Model_: UserSettings
+-   _Database_: user_settings
+-   _Collection_: UserSettingsCollection
+-   _Resource_: UserSettingsResource
+-   _Main Route_: /api/user-settings
+
+> **Routes**
+>
+> -   /api/user-settings
+>
+>     -   Parameters:
+>         -   sorting (optional)
+>             -   value: only available values [no09, no90, userNoAZ, userNoZA, isPublicAZ, isPublicZA, profilePhotoAZ, profilePhotoZA, websiteThemeAZ, websiteThemeZA, dashboardThemeAZ, dashboardThemeZA]
+>         -   page (optional)
+>             -   value: numeric values
+>
+> -   /api/user-settings/:userTypeNo
+
+### **_Categories_**
+
+-   _Controller_: CategoriesController
+-   _Model_: Categories
+-   _Database_: categories
+-   _Collection_: CategoriesCollection
+-   _Resource_: CategoriesResource
+-   _Main Route_: /api/categories
+
+> **Routes**
+>
+> -   /api/categories
+>
+>     -   Parameters:
+>         -   hasChildrenCategories (optional)
+>             -   value: everything
+>         -   hasNews (optional)
+>             -   value: everything
+>         -   sorting (optional)
+>             -   value: only available values [no09, no90, nameAZ, nameZA, slugAZ, slugZA, isParent09, isParent90, parentCategoryAZ, parentCategoryZA]
+>         -   page (optional)
+>             -   value: numeric values
+>
+> -   /api/categories/:userTypeNo
+>     -   Parameters:
+>         -   hasChildrenCategories (optional)
+>             -   value: everything
+>         -   hasNews (optional)
+>             -   value: everything
+
+### **_Resource Platforms_**
+
+-   _Controller_: ResourcePlatformsController
+-   _Model_: ResourcePlatforms
+-   _Database_: resource_platforms
+-   _Collection_: ResourcePlatformsCollection
+-   _Resource_: ResourcePlatformsResource
+-   _Main Route_: /api/resource-platforms
+
+> **Routes**
+>
+> /api/resource-platforms
+>
+> -   Parameters:
+>     -   hasResourceUrls (optional)
+>         -   value: everything
+>     -   hasNews (optional)
+>         -   value: everything
+>     -   sorting (optional)
+>         -   value: only available values [no09, no90, nameAZ, nameZA, mainUrlAZ, mainUrlZA, slugAZ, slugZA]
+>     -   page (optional)
+>         -   value: numeric values
+>
+> /api/resource-platforms/:userTypeNo
+>
+> -   Parameters:
+>     -   hasResourceUrls (optional)
+>         -   value: everything
+>     -   hasNews (optional)
+>         -   value: everything
+
+### **_Resource Urls_**
+
+-   _Controller_: ResourceUrlsController
+-   _Model_: ResourceUrls
+-   _Database_: resource_urls
+-   _Collection_: ResourceUrlsCollection
+-   _Resource_: ResourceUrlsResource
+-   _Main Route_: /api/resource-urls
+
+> **Routes**
+>
+> /api/resource-urls
+>
+> -   Parameters:
+>     -   hasNews (optional)
+>         -   value: everything
+>     -   sorting (optional)
+>         -   value: only available values [no09, no90, urlAZ, urlZA, platformAZ, platformZA]
+>     -   page (optional)
+>         -   value: numeric values
+>
+> /api/resource-urls/:userTypeNo
+>
+> -   Parameters:
+>     -   hasNews (optional)
+>         -   value: everything
+
+### **_News_**
+
+-   _Controller_: NewsController
+-   _Model_: News
+-   _Database_: news
+-   _Collection_: NewsCollection
+-   _Resource_: NewsResource
+-   _Main Route_: /api/news
+
+> **Routes**
+>
+> /api/news
+>
+> -   Parameters:
+>     -   sorting (optional)
+>         -   value: only available values [no09, no90, titleAZ, titleZA, contentAZ, contentZA, authorAZ, authorZA, categoryAZ, categoryZA, resourcePlatformAZ, resourcePlatformZA, resourceUrlAZ, resourceUrlZA, addedTime09, addedTime90, publishStatusAZ, publishStatusZA, publishDate09, publishDate90, statusAZ, statusZA, slugAZ, slugZA, isApproved09, isApproved90, approvedAt09, approvedAt90, approvedByAZ, approvedByZA, isRejected09, isRejected90, rejectedAt09, rejectedAt90, rejectedByAZ, rejectedByZA, rejectedReasonAZ, rejectedReasonZA]
+>     -   page (optional)
+>         -   value: numeric values
+>
+> /api/news/:userTypeNo

@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Categories;
 use Illuminate\Http\Request;
+use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
+use App\Http\Tools\EloquentGenerator;
+use App\Http\Tools\RelationshipGenerator;
+use App\Http\Resources\CategoriesResource;
 use App\Http\Resources\CategoriesCollection;
 use App\Http\Requests\StoreCategoriesRequest;
 use App\Http\Requests\UpdateCategoriesRequest;
-use App\Http\Resources\CategoriesResource;
-use App\Http\Tools\RelationshipGenerator;
+use App\Http\Tools\SortingListGenerator;
 
 class CategoriesController extends Controller
 {
@@ -24,8 +27,36 @@ class CategoriesController extends Controller
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship("parentCategoryData", $data);
         $data = RelationshipGenerator::hasRelationshipInRequest($request, ["childrenCategories", "news"], $data);
-        $data = $data->paginate();
+        $data = $this->sorting($request, $data);
+        $data = LimitGenerator::generateLimitAndPaginate($request, $data);
+        $pagination = $data["pagination"];
+        $data = $data["data"];
         $data = new CategoriesCollection($data);
+        $response = [
+            "data" => $data,
+            "pagination" => $pagination
+        ];
+        return $response;
+    }
+
+    public function sorting($request, $data)
+    {
+        if ($request->sorting) {
+            $sortingNames = [
+                'no09',
+                'no90',
+                'nameAZ',
+                'nameZA',
+                'slugAZ',
+                'slugZA',
+                'isParent09',
+                'isParent90',
+                'parentCategoryAZ',
+                'parentCategoryZA'
+            ];
+            $sortingList = SortingListGenerator::sortingListGenerate($sortingNames);
+            $data = EloquentGenerator::orderByWithSortingList($request, $data, $sortingList);
+        }
         return $data;
     }
 

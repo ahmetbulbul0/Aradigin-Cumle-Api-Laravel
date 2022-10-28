@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Http\Tools\LimitGenerator;
 use App\Models\UserTypePermissions;
 use App\Http\Controllers\Controller;
+use App\Http\Tools\EloquentGenerator;
+use App\Http\Tools\SortingListGenerator;
 use App\Http\Tools\RelationshipGenerator;
 use App\Http\Resources\UserTypePermissionsResource;
 use App\Http\Resources\UserTypePermissionsCollection;
@@ -18,13 +21,35 @@ class UserTypePermissionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data = new UserTypePermissions();
         $data = $data->where("is_deleted", false);
         $data = RelationshipGenerator::addRelationship("userTypeData", $data);
-        $data = $data->paginate();
+        $data = $this->sorting($request, $data);
+        $data = LimitGenerator::generateLimitAndPaginate($request, $data);
+        $pagination = $data["pagination"];
+        $data = $data["data"];
         $data = new UserTypePermissionsCollection($data);
+        $response = [
+            "data" => $data,
+            "pagination" => $pagination
+        ];
+        return $response;
+    }
+
+    public function sorting($request, $data)
+    {
+        if ($request->sorting) {
+            $sortingNames = [
+                'no09',
+                'no90',
+                "userTypeNoAZ",
+                "userTypeNoZA"
+            ];
+            $sortingList = SortingListGenerator::sortingListGenerate($sortingNames);
+            $data = EloquentGenerator::orderByWithSortingList($request, $data, $sortingList);
+        }
         return $data;
     }
 
