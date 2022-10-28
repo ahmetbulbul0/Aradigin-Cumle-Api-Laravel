@@ -157,20 +157,20 @@ php artisan serve
 > **Routes**
 >   
 > * /api/categories
->       - Parameters:
->           - hasChildrenCategories (optional)
->               - value: everything
->           - hasNews (optional)
->               - value: everything
->           - sorting (optional)
->               - value: only available values [no09, no90, nameAZ, nameZA, slugAZ, slugZA, isParent09, isParent90, parentCategoryAZ, parentCategoryZA]
+>   - Parameters:
+>       - hasChildrenCategories (optional)
+>           - value: everything
+>       - hasNews (optional)
+>           - value: everything
+>       - sorting (optional)
+>           - value: only available values [no09, no90, nameAZ, nameZA, slugAZ, slugZA, isParent09, isParent90, parentCategoryAZ, parentCategoryZA]
 > 
 > * /api/categories/:userTypeNo
->       - Parameters:
->           - hasChildrenCategories (optional)
->               - value: everything
->           - hasNews (optional)
->               - value: everything
+>   - Parameters:
+>       - hasChildrenCategories (optional)
+>           - value: everything
+>       - hasNews (optional)
+>           - value: everything
 
 ### ***Resource Platforms***
 
