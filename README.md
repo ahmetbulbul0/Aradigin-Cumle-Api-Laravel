@@ -53,18 +53,18 @@ php artisan serve
 
 > **Routes**
 >   
-> > * /api/user-types
-> >     - Parameters:
-> >         - hasUsers (optional)
-> >             - value: everything
-> >         - sorting (optional)
-> >             - value: only available values [no09, no90, nameAZ, nameZA, slugAZ, slugZA, permissionsAZ, permissionsZA]
+> * /api/user-types
+>   - Parameters:
+>       - hasUsers (optional)
+>           - value: everything
+>       - sorting (optional)
+>           - value: only available values [no09, no90, nameAZ, nameZA, slugAZ, slugZA, permissionsAZ, permissionsZA]
 > 
-> > * /api/user-types/:userTypeNo
-> >     - Parameters:
-> >         - hasUsers (optional)
-> >             - value: everything
-> >
+> * /api/user-types/:userTypeNo
+>     - Parameters:
+>         - hasUsers (optional)
+>             - value: everything
+>
 
 ### ***User Type Permissions***
 
@@ -77,9 +77,12 @@ php artisan serve
 
 > **Routes**
 >   
-> /api/user-type-permissions
+> * /api/user-type-permissions
+>     - Parameters:
+>         - sorting (optional)
+>             - value: only available values [no09, no90, userTypeNoAZ, userTypeNoZA]
 >
-> /api/user-type-permissions/:userTypeNo
+> * /api/user-type-permissions/:userTypeNo
 
 ### ***Users***
 
@@ -92,9 +95,19 @@ php artisan serve
 
 > **Routes**
 >   
-> /api/users
+> * /api/users
+>   - Parameters:
+>       - hasNews (optional)
+>           - value: everything
+>       - sorting (optional)
+>           - value: only available values [no09, no90, usernameAZ, usernameZA, fullNameAZ, fullNameZA, passwordAZ, passwordZA, typeAZ, typeZA, settingsAZ, settingsZA, permissionsAZ, permissionsZA]
+>       - page (optional)
+>           - value: numeric values
 >
-> /api/users/:userTypeNo
+> * /api/users/:userTypeNo
+>   - Parameters:
+>       - hasNews (optional)
+>           - value: everything
 
 ### ***User Permissions***
 
@@ -107,9 +120,12 @@ php artisan serve
 
 > **Routes**
 >   
-> /api/user-permissions
+> * /api/user-permissions
+>     - Parameters:
+>         - sorting (optional)
+>             - value: only available values [no09, no90, userNoAZ, userNoZA, isBannedAZ, isBannedZA]
 >
-> /api/user-permissions/:userTypeNo
+> * /api/user-permissions/:userTypeNo
 
 ### ***User Settings***
 
@@ -122,9 +138,12 @@ php artisan serve
 
 > **Routes**
 >   
-> /api/user-settings
+> * /api/user-settings
+>     - Parameters:
+>         - sorting (optional)
+>             - value: only available values [no09, no90, userNoAZ, userNoZA, isPublicAZ, isPublicZA, profilePhotoAZ, profilePhotoZA, websiteThemeAZ, websiteThemeZA, dashboardThemeAZ, dashboardThemeZA]
 >
-> /api/user-settings/:userTypeNo
+> * /api/user-settings/:userTypeNo
 
 ### ***Categories***
 
@@ -137,9 +156,21 @@ php artisan serve
 
 > **Routes**
 >   
-> /api/categories
->
-> /api/categories/:userTypeNo
+> * /api/categories
+>       - Parameters:
+>           - hasChildrenCategories (optional)
+>               - value: everything
+>           - hasNews (optional)
+>               - value: everything
+>           - sorting (optional)
+>               - value: only available values [no09, no90, nameAZ, nameZA, slugAZ, slugZA, isParent09, isParent90, parentCategoryAZ, parentCategoryZA]
+> 
+> * /api/categories/:userTypeNo
+>       - Parameters:
+>           - hasChildrenCategories (optional)
+>               - value: everything
+>           - hasNews (optional)
+>               - value: everything
 
 ### ***Resource Platforms***
 
