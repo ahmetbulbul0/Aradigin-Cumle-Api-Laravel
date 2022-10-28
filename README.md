@@ -53,9 +53,18 @@ php artisan serve
 
 > **Routes**
 >   
-> > /api/user-types
->
-> > /api/user-types/:userTypeNo
+> > * /api/user-types
+> >     - Parameters:
+> >         - hasUsers (optional)
+> >             - value: everything
+> >         - sorting (optional)
+> >             - value: only available values [no09, no90, nameAZ, nameZA, slugAZ, slugZA, permissionsAZ, permissionsZA]
+> 
+> > * /api/user-types/:userTypeNo
+> >     - Parameters:
+> >         - hasUsers (optional)
+> >             - value: everything
+> >
 
 ### ***User Type Permissions***
 
