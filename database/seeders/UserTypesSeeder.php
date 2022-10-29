@@ -18,7 +18,7 @@ class UserTypesSeeder extends Seeder
         UserTypes::factory()
             ->count(1)
             ->state(['name' => 'system', 'slug' => 'system'])
-            ->hasPermissions(1, function (array $attributes, UserTypes $userType) {
+            ->hasPermissionsData(1, function (array $attributes, UserTypes $userType) {
                 return ['no' => $userType->permissions];
             })
             ->create();
@@ -26,7 +26,7 @@ class UserTypesSeeder extends Seeder
         UserTypes::factory()
             ->count(1)
             ->state(['name' => 'author', 'slug' => 'author'])
-            ->hasPermissions(1, function (array $attributes, UserTypes $userType) {
+            ->hasPermissionsData(1, function (array $attributes, UserTypes $userType) {
                 return ['no' => $userType->permissions];
             })
             ->create();
@@ -34,7 +34,7 @@ class UserTypesSeeder extends Seeder
         UserTypes::factory()
             ->count(1)
             ->state(['name' => 'editor', 'slug' => 'editor'])
-            ->hasPermissions(1, function (array $attributes, UserTypes $userType) {
+            ->hasPermissionsData(1, function (array $attributes, UserTypes $userType) {
                 return ['no' => $userType->permissions];
             })
             ->create();

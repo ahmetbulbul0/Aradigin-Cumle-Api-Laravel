@@ -17,10 +17,10 @@ class UsersSeeder extends Seeder
     {
         Users::factory()
             ->count(25)
-            ->hasPermissions(1, function (array $attributes, Users $user) {
+            ->hasPermissionsData(1, function (array $attributes, Users $user) {
                 return ['no' => $user->permissions];
             })
-            ->hasSettings(1, function (array $attributes, Users $user) {
+            ->hasSettingsData(1, function (array $attributes, Users $user) {
                 return ['no' => $user->settings];
             })
             ->create();
