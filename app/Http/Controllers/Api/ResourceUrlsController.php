@@ -70,10 +70,9 @@ class ResourceUrlsController extends Controller
             "url" => $request->url,
             "platform" => $request->platform
         ];
-
-        $create = ResourceUrls::create($data);
-
-        return new ResourceUrlsResource($create);
+        ResourceUrls::create($data);
+        $created = ResourceUrls::where(["is_deleted" => false, "no" => $data["no"]])->with("platformData")->first();
+        return new ResourceUrlsResource($created);
     }
 
     /**

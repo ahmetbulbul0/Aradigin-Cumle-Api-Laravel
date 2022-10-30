@@ -78,10 +78,9 @@ class CategoriesController extends Controller
             "is_children" => $request->isChildren ? $request->isChildren : false,
             "parent_category" => intval($request->parentCategory)
         ];
-
-        $create = Categories::create($data);
-
-        return new CategoriesResource($create);
+        Categories::create($data);
+        $created = Categories::where(["is_deleted" => false, "no" => $data["no"]])->with("parentCategoryData")->first();
+        return new CategoriesResource($created);
     }
 
     /**

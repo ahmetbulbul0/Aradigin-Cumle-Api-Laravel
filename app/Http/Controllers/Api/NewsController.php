@@ -114,14 +114,11 @@ class NewsController extends Controller
             "status" => "pending",
             "slug" => Str::slug($request->title),
         ];
-
         $resourceUrl = $this->newsResourceUrlStore($data);
-
         $data["resource_url"] = $resourceUrl["no"];
-
-        $create = News::create($data);
-
-        return new NewsResource($create);
+        News::create($data);
+        $created = News::where(["is_deleted" => false, "no" => $data["no"]])->with("authorData", "categoryData", "resourcePlatformData", "resourceUrlData")->first();
+        return new NewsResource($created);
     }
 
     static function newsResourceUrlStore($rData)
@@ -131,10 +128,9 @@ class NewsController extends Controller
             "url" => $rData["resource_url"],
             "platform" => $rData["resource_platform"],
         ];
-
-        $create = ResourceUrls::create($data);
-
-        return new ResourceUrlsResource($create);
+        ResourceUrls::create($data);
+        $created = ResourceUrls::where(["is_deleted" => false, "no" => $data["no"]])->first();
+        return new ResourceUrlsResource($created);
     }
 
     /**
