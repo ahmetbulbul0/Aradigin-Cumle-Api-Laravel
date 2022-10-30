@@ -8,6 +8,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Categories extends Model
 {
+    protected $fillable = [
+        "no",
+        "name",
+        "slug",
+        "is_parent",
+        "is_children",
+        "parent_category"
+    ];
+
     use HasFactory;
 
     public function parentCategoryData() {

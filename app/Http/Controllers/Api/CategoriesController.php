@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Categories;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Tools\NoGenerator;
 use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
 use App\Http\Tools\EloquentGenerator;
+use App\Http\Tools\SortingListGenerator;
 use App\Http\Tools\RelationshipGenerator;
 use App\Http\Resources\CategoriesResource;
 use App\Http\Resources\CategoriesCollection;
 use App\Http\Requests\StoreCategoriesRequest;
 use App\Http\Requests\UpdateCategoriesRequest;
-use App\Http\Tools\SortingListGenerator;
 
 class CategoriesController extends Controller
 {
@@ -68,7 +70,18 @@ class CategoriesController extends Controller
      */
     public function store(StoreCategoriesRequest $request)
     {
-        //
+        $data = [
+            "no" => NoGenerator::generateCategoriesNo(),
+            "name" => Str::lower($request->name),
+            "slug" => Str::slug(Str::lower($request->name)),
+            "is_parent" => $request->isParent ? $request->isParent : true,
+            "is_children" => $request->isChildren ? $request->isChildren : false,
+            "parent_category" => intval($request->parentCategory)
+        ];
+
+        $create = Categories::create($data);
+
+        return new CategoriesResource($create);
     }
 
     /**
