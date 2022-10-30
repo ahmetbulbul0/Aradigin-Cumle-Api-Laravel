@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\News;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Tools\NoGenerator;
 use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\NewsResource;
@@ -11,8 +13,11 @@ use App\Http\Tools\EloquentGenerator;
 use App\Http\Resources\NewsCollection;
 use App\Http\Requests\StoreNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
+use App\Http\Resources\CategoriesResource;
+use App\Http\Resources\ResourceUrlsResource;
 use App\Http\Tools\SortingListGenerator;
 use App\Http\Tools\RelationshipGenerator;
+use App\Models\ResourceUrls;
 
 class NewsController extends Controller
 {
@@ -95,7 +100,41 @@ class NewsController extends Controller
      */
     public function store(StoreNewsRequest $request)
     {
-        //
+        $data = [
+            "no" => NoGenerator::generateNewsNo(),
+            "title" => $request->title,
+            "content" => $request->content,
+            "author" => intval($request->author),
+            "category" => intval($request->category),
+            "resource_platform" => intval($request->resourcePlatform),
+            "resource_url" => $request->resourceUrl,
+            "added_time" => date("Y-m-d/H:i:s"),
+            "publish_status" => $request->publishStatus,
+            "publish_date" => $request->publishDate,
+            "status" => "pending",
+            "slug" => Str::slug($request->title),
+        ];
+
+        $resourceUrl = $this->newsResourceUrlStore($data);
+
+        $data["resource_url"] = $resourceUrl["no"];
+
+        $create = News::create($data);
+
+        return new NewsResource($create);
+    }
+
+    static function newsResourceUrlStore($rData)
+    {
+        $data = [
+            "no" => NoGenerator::generateNewsNo(),
+            "url" => $rData["resource_url"],
+            "platform" => $rData["resource_platform"],
+        ];
+
+        $create = ResourceUrls::create($data);
+
+        return new ResourceUrlsResource($create);
     }
 
     /**

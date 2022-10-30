@@ -13,7 +13,7 @@ class StoreResourceUrlsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class StoreResourceUrlsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "url" => ["required", "string", "unique:resource_urls,url"],
+            "platform" => ["required", "integer", "exists:resource_platforms,no"]
         ];
     }
 }

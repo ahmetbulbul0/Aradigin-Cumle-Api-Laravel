@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\ResourceUrls;
 use Illuminate\Http\Request;
+use App\Http\Tools\NoGenerator;
 use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
 use App\Http\Tools\EloquentGenerator;
@@ -64,7 +65,15 @@ class ResourceUrlsController extends Controller
      */
     public function store(StoreResourceUrlsRequest $request)
     {
-        //
+        $data = [
+            "no" => NoGenerator::generateResourceUrlsNo(),
+            "url" => $request->url,
+            "platform" => $request->platform
+        ];
+
+        $create = ResourceUrls::create($data);
+
+        return new ResourceUrlsResource($create);
     }
 
     /**
