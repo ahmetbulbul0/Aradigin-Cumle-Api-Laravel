@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserPermissions extends Model
 {
+    protected $fillable = [
+        "no",
+        "user_no",
+        "is_banned"
+    ];
+
     use HasFactory;
 
     public function userData() {

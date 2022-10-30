@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserTypes extends Model
 {
+    protected $fillable = [
+        "no",
+        "name",
+        "slug",
+        "permissions"
+    ];
+
     use HasFactory;
 
     public function users() {

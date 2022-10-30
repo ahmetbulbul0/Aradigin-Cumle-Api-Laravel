@@ -10,6 +10,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Users extends Model
 {
+    protected $fillable = [
+        "no",
+        "username",
+        "full_name",
+        "password",
+        "type",
+        "settings",
+        "permissions"
+    ];
+
     use HasFactory;
 
     public function typeData() {

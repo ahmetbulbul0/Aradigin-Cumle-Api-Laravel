@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class ResourceUrls extends Model
 {
+    protected $fillable = [
+        "no",
+        "url",
+        "platform"
+    ];
+
     use HasFactory;
 
     public function platformData() {

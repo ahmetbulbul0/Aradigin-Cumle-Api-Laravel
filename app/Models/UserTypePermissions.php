@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserTypePermissions extends Model
 {
+    protected $fillable = [
+        "no",
+        "user_type_no"
+    ];
+
     use HasFactory;
 
     public function userTypeData() {

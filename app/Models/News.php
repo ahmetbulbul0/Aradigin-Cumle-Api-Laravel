@@ -11,6 +11,28 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class News extends Model
 {
+    protected $fillable = [
+        "no",
+        "title",
+        "content",
+        "author",
+        "category",
+        "resource_platform",
+        "resource_url",
+        "added_time",
+        "publish_status",
+        "publish_date",
+        "status",
+        "slug",
+        "is_approved",
+        "approved_at",
+        "approved_by",
+        "is_rejected",
+        "rejected_at",
+        "rejected_by",
+        "rejected_reason"
+    ];
+
     use HasFactory;
 
     public function authorData() {

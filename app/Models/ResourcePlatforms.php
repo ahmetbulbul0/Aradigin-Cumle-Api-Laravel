@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ResourcePlatforms extends Model
 {
+    protected $fillable = [
+        "no",
+        "name",
+        "main_url",
+        "slug"
+    ];
+
     use HasFactory;
 
     public function resourceUrls() {
