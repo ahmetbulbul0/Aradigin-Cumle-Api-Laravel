@@ -13,7 +13,7 @@ class StoreResourcePlatformsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class StoreResourcePlatformsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "name" => ['required', "unique:resource_platforms,name", "string"],
+            "mainUrl" => ['required', "unique:resource_platforms,main_url", "url"]
         ];
     }
 }

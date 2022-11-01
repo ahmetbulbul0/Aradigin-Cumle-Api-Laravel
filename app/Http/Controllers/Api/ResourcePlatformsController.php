@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Tools\NoGenerator;
 use App\Models\ResourcePlatforms;
 use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
@@ -65,7 +67,15 @@ class ResourcePlatformsController extends Controller
      */
     public function store(StoreResourcePlatformsRequest $request)
     {
-        //
+        $data = [
+            "no" => NoGenerator::generateResourcePlatformsNo(),
+            "name" => $request->name,
+            "main_url" => $request->mainUrl,
+            "slug" => Str::slug($request->name)
+        ];
+        ResourcePlatforms::create($data);
+        $created = ResourcePlatforms::where(["is_deleted" => false, "no" => $data["no"]])->first();
+        return new ResourcePlatformsResource($created);
     }
 
     /**

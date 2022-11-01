@@ -68,7 +68,7 @@ class ResourceUrlsController extends Controller
         $data = [
             "no" => NoGenerator::generateResourceUrlsNo(),
             "url" => $request->url,
-            "platform" => $request->platform
+            "platform" => intval($request->platform)
         ];
         ResourceUrls::create($data);
         $created = ResourceUrls::where(["is_deleted" => false, "no" => $data["no"]])->with("platformData")->first();
