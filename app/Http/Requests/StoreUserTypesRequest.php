@@ -13,7 +13,7 @@ class StoreUserTypesRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class StoreUserTypesRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "name" => ["required", "string", "unique:user_types,name"]
         ];
     }
 }

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\UserTypes;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Tools\NoGenerator;
 use App\Http\Tools\LimitGenerator;
+use App\Models\UserTypePermissions;
 use App\Http\Controllers\Controller;
 use App\Http\Tools\EloquentGenerator;
 use App\Http\Tools\SortingListGenerator;
@@ -13,6 +16,7 @@ use App\Http\Tools\RelationshipGenerator;
 use App\Http\Resources\UserTypesCollection;
 use App\Http\Requests\StoreUserTypesRequest;
 use App\Http\Requests\UpdateUserTypesRequest;
+use App\Http\Resources\UserTypePermissionsResource;
 
 class UserTypesController extends Controller
 {
@@ -66,7 +70,30 @@ class UserTypesController extends Controller
      */
     public function store(StoreUserTypesRequest $request)
     {
-        //
+        $data = [
+            "no" => NoGenerator::generateUserTypesNo(),
+            "name" => Str::lower($request->name),
+            "slug" => Str::slug(Str::lower($request->name)),
+        ];
+
+        $permissions = $this->userTypesPermissionsStore($data);
+        $data["permissions"] = $permissions["no"];
+
+        UserTypes::create($data);
+        $created = UserTypes::where(["is_deleted" => false, "no" => $data["no"]])->with("permissionsData")->first();
+        return new UserTypesResource($created);
+    }
+
+    static function userTypesPermissionsStore($rData)
+    {
+        $data = [
+            "no" => NoGenerator::generateUserTypePermissionsNo(),
+            "user_type_no" => $rData["no"],
+        ];
+
+        UserTypePermissions::create($data);
+        $created = UserTypePermissions::where(["is_deleted" => false, "no" => $data["no"]])->first();
+        return new UserTypePermissionsResource($created);
     }
 
     /**

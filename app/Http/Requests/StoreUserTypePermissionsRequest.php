@@ -13,7 +13,7 @@ class StoreUserTypePermissionsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class StoreUserTypePermissionsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "userTypeNo" => ["required", "integer", "unique:user_type_permissions,user_type_no", "exists:user_types,no"]
         ];
     }
 }
