@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Users;
+use App\Models\ResourceUrls;
+use App\Models\UserSettings;
 use Illuminate\Http\Request;
+use App\Http\Tools\NoGenerator;
+use App\Models\UserPermissions;
 use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UsersResource;
@@ -13,6 +17,9 @@ use App\Http\Requests\StoreUsersRequest;
 use App\Http\Tools\SortingListGenerator;
 use App\Http\Requests\UpdateUsersRequest;
 use App\Http\Tools\RelationshipGenerator;
+use App\Http\Resources\ResourceUrlsResource;
+use App\Http\Resources\UserSettingsResource;
+use App\Http\Resources\UserPermissionsResource;
 
 class UsersController extends Controller
 {
@@ -72,7 +79,44 @@ class UsersController extends Controller
      */
     public function store(StoreUsersRequest $request)
     {
-        //
+        $data = [
+            "no" => NoGenerator::generateUsersNo(),
+            "username" => $request->username,
+            "full_name" => $request->fullName,
+            "password" => $request->password,
+            "type" => intval($request->type),
+        ];
+        $settings = $this->usersSettingsStore($data);
+        $data["settings"] = $settings["no"];
+
+        $permissions = $this->usersPermissionsStore($data);
+        $data["permissions"] = $permissions["no"];
+
+        Users::create($data);
+        $created = Users::where(["is_deleted" => false, "no" => $data["no"]])->with("typeData", "permissionsData", "settingsData")->first();
+        return new UsersResource($created);
+    }
+
+    static function usersSettingsStore($rData)
+    {
+        $data = [
+            "no" => NoGenerator::generateUserSettingsNo(),
+            "user_no" => $rData["no"],
+        ];
+        UserSettings::create($data);
+        $created = UserSettings::where(["is_deleted" => false, "no" => $data["no"]])->first();
+        return new UserSettingsResource($created);
+    }
+
+    static function usersPermissionsStore($rData)
+    {
+        $data = [
+            "no" => NoGenerator::generateUserPermissionsNo(),
+            "user_no" => $rData["no"],
+        ];
+        UserPermissions::create($data);
+        $created = UserPermissions::where(["is_deleted" => false, "no" => $data["no"]])->first();
+        return new UserPermissionsResource($created);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Http\Tools\NoGenerator;
 use App\Models\UserPermissions;
 use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
@@ -63,7 +64,13 @@ class UserPermissionsController extends Controller
      */
     public function store(StoreUserPermissionsRequest $request)
     {
-        //
+        $data = [
+            "no" => NoGenerator::generateUserPermissionsNo(),
+            "user_no" => $request->userNo,
+        ];
+        UserPermissions::create($data);
+        $created = UserPermissions::where(["is_deleted" => false, "no" => $data["no"]])->with("userData")->first();
+        return new UserPermissionsResource($created);
     }
 
     /**

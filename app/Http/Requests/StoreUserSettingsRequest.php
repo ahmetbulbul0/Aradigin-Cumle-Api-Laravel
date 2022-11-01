@@ -13,7 +13,7 @@ class StoreUserSettingsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class StoreUserSettingsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "userNo" => ["required", "integer", "exists:users,no", "unique:user_settings,user_no"]
         ];
     }
 }

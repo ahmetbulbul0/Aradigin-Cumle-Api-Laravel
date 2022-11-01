@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\UserSettings;
 use Illuminate\Http\Request;
+use App\Http\Tools\NoGenerator;
 use App\Http\Tools\LimitGenerator;
 use App\Http\Controllers\Controller;
 use App\Http\Tools\EloquentGenerator;
@@ -69,7 +70,13 @@ class UserSettingsController extends Controller
      */
     public function store(StoreUserSettingsRequest $request)
     {
-        //
+        $data = [
+            "no" => NoGenerator::generateUserSettingsNo(),
+            "user_no" => $request->userNo,
+        ];
+        UserSettings::create($data);
+        $created = UserSettings::where(["is_deleted" => false, "no" => $data["no"]])->with("userData")->first();
+        return new UserSettingsResource($created);
     }
 
     /**
