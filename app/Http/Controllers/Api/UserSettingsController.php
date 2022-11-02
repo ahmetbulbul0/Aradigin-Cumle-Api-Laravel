@@ -114,8 +114,12 @@ class UserSettingsController extends Controller
      * @param  \App\Models\UserSettings  $userSettings
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserSettings $userSettings)
+    public function destroy($no)
     {
-        //
+        $data = new UserSettings();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $deletedData = $data->first();
+        $data->update(["is_deleted" => true]);
+        return new UserSettingsResource($deletedData);
     }
 }

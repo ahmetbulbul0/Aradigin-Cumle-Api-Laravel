@@ -113,8 +113,12 @@ class ResourcePlatformsController extends Controller
      * @param  \App\Models\ResourcePlatforms  $resourcePlatforms
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ResourcePlatforms $resourcePlatforms)
+    public function destroy($no)
     {
-        //
+        $data = new ResourcePlatforms();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $deletedData = $data->first();
+        $data->update(["is_deleted" => true]);
+        return new ResourcePlatformsResource($deletedData);
     }
 }

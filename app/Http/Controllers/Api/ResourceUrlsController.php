@@ -111,8 +111,12 @@ class ResourceUrlsController extends Controller
      * @param  \App\Models\ResourceUrls  $resourceUrls
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ResourceUrls $resourceUrls)
+    public function destroy($no)
     {
-        //
+        $data = new ResourceUrls();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $deletedData = $data->first();
+        $data->update(["is_deleted" => true]);
+        return new ResourceUrlsResource($deletedData);
     }
 }

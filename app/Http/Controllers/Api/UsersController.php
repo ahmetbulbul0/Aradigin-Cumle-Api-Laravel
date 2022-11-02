@@ -155,8 +155,12 @@ class UsersController extends Controller
      * @param  \App\Models\Users  $users
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Users $users)
+    public function destroy($no)
     {
-        //
+        $data = new Users();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $deletedData = $data->first();
+        $data->update(["is_deleted" => true]);
+        return new UsersResource($deletedData);
     }
 }

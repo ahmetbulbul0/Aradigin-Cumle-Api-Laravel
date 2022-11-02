@@ -118,8 +118,12 @@ class CategoriesController extends Controller
      * @param  \App\Models\Categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categories $categories)
+    public function destroy($no)
     {
-        //
+        $data = new Categories();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $deletedData = $data->first();
+        $data->update(["is_deleted" => true]);
+        return new CategoriesResource($deletedData);
     }
 }

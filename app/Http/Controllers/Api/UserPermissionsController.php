@@ -108,8 +108,12 @@ class UserPermissionsController extends Controller
      * @param  \App\Models\UserPermissions  $userPermissions
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserPermissions $userPermissions)
+    public function destroy($no)
     {
-        //
+        $data = new UserPermissions();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $deletedData = $data->first();
+        $data->update(["is_deleted" => true]);
+        return new UserPermissionsResource($deletedData);
     }
 }

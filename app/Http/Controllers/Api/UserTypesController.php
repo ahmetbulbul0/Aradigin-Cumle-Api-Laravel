@@ -132,8 +132,12 @@ class UserTypesController extends Controller
      * @param  \App\Models\UserTypes  $userTypes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserTypes $userTypes)
+    public function destroy($no)
     {
-        //
+        $data = new UserTypes();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $deletedData = $data->first();
+        $data->update(["is_deleted" => true]);
+        return new UserTypesResource($deletedData);
     }
 }

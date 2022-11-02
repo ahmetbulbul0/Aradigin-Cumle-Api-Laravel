@@ -19,15 +19,18 @@ class Categories extends Model
 
     use HasFactory;
 
-    public function parentCategoryData() {
+    public function parentCategoryData()
+    {
         return $this->hasOne(Categories::class, "no", "parent_category")->with("parentCategoryData");
     }
 
-    public function childrenCategories() {
+    public function childrenCategories()
+    {
         return $this->hasMany(Categories::class, "parent_category", "no")->with("childrenCategories");
     }
 
-    public function news() {
+    public function news()
+    {
         return $this->hasMany(News::class, "category", "no")->with("authorData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData");
     }
 }
