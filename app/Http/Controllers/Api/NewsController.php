@@ -172,6 +172,7 @@ class NewsController extends Controller
     {
         $data = new News();
         $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $deletedData = $data->with("authorData", "categoryData", "resourcePlatformData", "resourceUrlData", "approvedByData", "rejectedByData");
         $deletedData = $data->first();
         $data->update(["is_deleted" => true]);
         return new NewsResource($deletedData);

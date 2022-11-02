@@ -112,6 +112,7 @@ class UserPermissionsController extends Controller
     {
         $data = new UserPermissions();
         $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $deletedData = $data->with("userData");
         $deletedData = $data->first();
         $data->update(["is_deleted" => true]);
         return new UserPermissionsResource($deletedData);

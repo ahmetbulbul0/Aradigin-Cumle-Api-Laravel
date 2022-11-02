@@ -110,6 +110,7 @@ class UserTypePermissionsController extends Controller
     {
         $data = new UserTypePermissions();
         $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $deletedData = $data->with("userTypeData");
         $deletedData = $data->first();
         $data->update(["is_deleted" => true]);
         return new UserTypePermissionsResource($deletedData);

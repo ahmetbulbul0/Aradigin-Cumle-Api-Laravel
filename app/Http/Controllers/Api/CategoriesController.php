@@ -122,6 +122,7 @@ class CategoriesController extends Controller
     {
         $data = new Categories();
         $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $deletedData = $data->with("parentCategoryData");
         $deletedData = $data->first();
         $data->update(["is_deleted" => true]);
         return new CategoriesResource($deletedData);

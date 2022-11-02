@@ -115,6 +115,7 @@ class ResourceUrlsController extends Controller
     {
         $data = new ResourceUrls();
         $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $deletedData = $data->with("platformData");
         $deletedData = $data->first();
         $data->update(["is_deleted" => true]);
         return new ResourceUrlsResource($deletedData);

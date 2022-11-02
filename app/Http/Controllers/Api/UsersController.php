@@ -159,6 +159,7 @@ class UsersController extends Controller
     {
         $data = new Users();
         $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $deletedData = $data->with("typeData", "permissionsData", "settingsData");
         $deletedData = $data->first();
         $data->update(["is_deleted" => true]);
         return new UsersResource($deletedData);
