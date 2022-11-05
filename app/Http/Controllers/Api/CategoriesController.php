@@ -107,9 +107,48 @@ class CategoriesController extends Controller
      * @param  \App\Models\Categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoriesRequest $request, Categories $categories)
+    public function update(UpdateCategoriesRequest $request, $no)
     {
-        //
+        $data = new Categories();
+        $data = $data->where(["is_deleted" => false, "no" => $no]);
+
+        $oldData = $data->first();
+        $oldData = new CategoriesResource($oldData);
+
+        $updateData = [
+            "name" => $request->name ? Str::lower($request->name) : $oldData->name,
+            "is_parent" => $request->isParent != null ? $request->isParent : $oldData->is_parent,
+            "is_children" => $request->isChildren != null ? $request->isChildren : $oldData->is_children,
+            "parent_category" => $request->parentCategory ? intval($request->parentCategory) : $oldData->parent_category
+        ];
+
+
+
+        if ($request->isChildren == null) {
+            dd($request->isChildren);
+        }
+
+        if ($updateData["name"] != $oldData["name"]) {
+            $updateData["slug"] = Str::slug($updateData["name"]);
+        }
+
+        if ($updateData["is_parent"] == true) {
+            $updateData["parent_category"] = null;
+        }
+
+        $oldData = $data->with("parentCategoryData");
+        $oldData = $data->first();
+
+        $newData = $data->update($updateData);
+        $newData = $data->with("parentCategoryData");
+        $newData = $data->first();
+
+        $response = [
+            "oldData" => new CategoriesResource($oldData),
+            "newData" => new CategoriesResource($newData)
+        ];
+
+        return $response;
     }
 
     /**
