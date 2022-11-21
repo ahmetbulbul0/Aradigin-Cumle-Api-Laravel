@@ -5,11 +5,15 @@ namespace App\Models;
 use App\Models\UserTypes;
 use App\Models\UserSettings;
 use App\Models\UserPermissions;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Users extends Model
+class Users extends Authenticatable
 {
+    use HasFactory, HasApiTokens, Notifiable;
+
     protected $fillable = [
         "no",
         "username",
@@ -19,8 +23,6 @@ class Users extends Model
         "settings",
         "permissions"
     ];
-
-    use HasFactory;
 
     public function typeData() {
         return $this->hasOne(UserTypes::class, "no", "type")->with("permissionsData");

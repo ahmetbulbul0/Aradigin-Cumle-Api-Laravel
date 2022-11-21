@@ -20,6 +20,7 @@ use App\Http\Tools\RelationshipGenerator;
 use App\Http\Resources\ResourceUrlsResource;
 use App\Http\Resources\UserSettingsResource;
 use App\Http\Resources\UserPermissionsResource;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -83,7 +84,7 @@ class UsersController extends Controller
             "no" => NoGenerator::generateUsersNo(),
             "username" => $request->username,
             "full_name" => $request->fullName,
-            "password" => $request->password,
+            "password" => Hash::make($request->password),
             "type" => intval($request->type),
         ];
         $settings = $this->usersSettingsStore($data);
