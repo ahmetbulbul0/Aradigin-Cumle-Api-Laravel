@@ -20,6 +20,13 @@ return new class extends Migration
             $table->integer('user_no');
             $table->boolean('is_banned')->default(false);
             /* IMPORTANT COLUMNS */
+            /* PERMISSIONS */
+            $table->boolean('change_visibility')->default(true);
+            $table->boolean('change_profile_photo')->default(true);
+            $table->boolean('change_website_theme')->default(true);
+            $table->boolean('change_dashboard_theme')->default(true);
+            $table->json('other')->nullable();
+            /* PERMISSIONS */
             $table->boolean("is_deleted")->default(false);
             $table->date("deleted_at")->nullable()->default(null);
             $table->timestamps();
