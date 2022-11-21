@@ -67,7 +67,7 @@ class NewsFactory extends Factory
         // $resourceUrl = $this->faker->domainName();
         $addedTime = $this->faker->dateTimeThisDecade();
         $publishStatus = $this->faker->randomElement(["task", "published", "planned"]);
-        $publishDate = $publishStatus == "task" ? null : $this->faker->dateTimeThisDecade();
+        $publishDate = $publishStatus == "task" ? null : strtotime("-1 hours");
         $status = $this->faker->randomElement(["pending", "approved", "rejected"]);
         $slug = SlugGenerator::single($title);
         $isApproved = $status == "approved" ? true : false;

@@ -14,6 +14,7 @@ use App\Http\Resources\NewsCollection;
 use App\Http\Requests\StoreNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
 use App\Http\Resources\CategoriesResource;
+use App\Http\Resources\PublicNewsCollection;
 use App\Http\Resources\ResourceUrlsResource;
 use App\Http\Tools\SortingListGenerator;
 use App\Http\Tools\RelationshipGenerator;
@@ -36,6 +37,26 @@ class NewsController extends Controller
         $pagination = $data["pagination"];
         $data = $data["data"];
         $data = new NewsCollection($data);
+        $response = [
+            "data" => $data,
+            "pagination" => $pagination
+        ];
+        return $response;
+    }
+
+    public function publicIndex(Request $request)
+    {
+        $data = new News();
+        $data = $data->where("is_deleted", false);
+        $data = $data->where("publish_status", "published");
+        $data = $data->where("status", "approved");
+        $data = $data->where("publish_date", "<", strtotime("now"));
+        $data = RelationshipGenerator::addRelationship(["authorData", "categoryData", "resourcePlatformData", "resourceUrlData"], $data);
+        $data = $this->sorting($request, $data);
+        $data = LimitGenerator::generateLimitAndPaginate($request, $data);
+        $pagination = $data["pagination"];
+        $data = $data["data"];
+        $data = new PublicNewsCollection($data);
         $response = [
             "data" => $data,
             "pagination" => $pagination
