@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
+use App\Models\UserPermissions;
+use App\Models\UserTypePermissions;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -22,11 +24,16 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            $token = $user->createToken('token')->plainTextToken;
+            $typePermissions = UserTypePermissions::where("user_type_no", $user->type)->first()->toArray();
+            $userPermissions = UserPermissions::where("user_no", $user->no)->first()->toArray();
+
+            $permissions = array_merge($typePermissions, $userPermissions);
+
+            $token = $user->createToken('token', $permissions)->plainTextToken;
 
             $response = [
                 "status" => 200,
-                "token" => $token
+                "token" => $token,
             ];
         } else {
             $response = [

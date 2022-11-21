@@ -6,6 +6,7 @@ use App\Http\Tools\NoGenerator;
 use App\Models\Users;
 use App\Models\UserTypes;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Users>
@@ -34,7 +35,7 @@ class UsersFactory extends Factory
         }
 
         $fullName = $this->faker->firstName()." ".$this->faker->lastName();
-        $password = $this->faker->password();
+        $password = Hash::make("facetoface");
         $type = $this->faker->randomElement($userTypes);
         $settings = NoGenerator::generateUserSettingsNo();
         $permissions = NoGenerator::generateUserPermissionsNo();
