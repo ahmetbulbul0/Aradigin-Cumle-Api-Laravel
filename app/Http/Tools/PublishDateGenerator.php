@@ -21,8 +21,7 @@ class PublishDateGenerator extends Controller
     static function single($publish_date)
     {
         $publishDate = [
-            "text" => date("Y.m.d - H:i:s", $publish_date),
-            "dsss" => strtotime("-3 week")
+            "text" => date("H:i:s - d.m.Y", $publish_date),
         ];
         $timeDistance = strtotime("now") - $publish_date;
         if ($timeDistance <= 60) {
