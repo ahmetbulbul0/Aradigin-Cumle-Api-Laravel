@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\ResourceDatas;
 
+use App\Http\Tools\PublishDateGenerator;
+
 class PublicNewsResourceData
 {
     static function get($thisData)
@@ -9,7 +11,7 @@ class PublicNewsResourceData
         $data = [
             "title" => $thisData->title,
             "content" => $thisData->content,
-            "publishDate" => $thisData->publish_date,
+            "publishDate" => PublishDateGenerator::single($thisData->publish_date),
             "slug" => $thisData->slug,
         ];
 
