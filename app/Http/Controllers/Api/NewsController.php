@@ -15,6 +15,7 @@ use App\Http\Requests\StoreNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
 use App\Http\Resources\CategoriesResource;
 use App\Http\Resources\PublicNewsCollection;
+use App\Http\Resources\PublicNewsResource;
 use App\Http\Resources\ResourceUrlsResource;
 use App\Http\Tools\SortingListGenerator;
 use App\Http\Tools\RelationshipGenerator;
@@ -169,6 +170,35 @@ class NewsController extends Controller
         $data = $data->first();
         $data = new NewsResource($data);
         return $data;
+    }
+
+    public function publicShow(Request $request)
+    {
+        $slug = $request->news;
+        $data = new News();
+
+        $data = $data->where("slug", $slug);
+        $data = $data->where("is_deleted", false);
+        $data = $data->where("publish_status", "published");
+        $data = $data->where("status", "approved");
+        $data = $data->where("publish_date", "<", strtotime("now"));
+
+        $data = RelationshipGenerator::addRelationship(["authorData", "categoryData", "resourcePlatformData", "resourceUrlData"], $data);
+        $data = $data->first();
+
+        if (!$data) {
+            $response = [
+                "status" => 404
+            ];
+        } else {
+            $data = new PublicNewsResource($data);
+            $response = [
+                "data" => $data,
+                "status" => 200
+            ];
+        }
+
+        return $response;
     }
 
     /**
