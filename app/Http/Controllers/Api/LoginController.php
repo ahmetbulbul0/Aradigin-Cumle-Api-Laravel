@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PublicUsersResource;
 use App\Models\UserPermissions;
 use App\Models\UserTypePermissions;
 use Illuminate\Support\Facades\Auth;
@@ -31,8 +32,11 @@ class LoginController extends Controller
 
             $token = $user->createToken('token', $permissions)->plainTextToken;
 
+            $user = new PublicUsersResource($user);
+
             $response = [
                 "status" => 200,
+                "user" => $user,
                 "token" => $token,
             ];
         } else {
