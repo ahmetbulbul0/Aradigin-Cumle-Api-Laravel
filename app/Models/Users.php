@@ -24,6 +24,14 @@ class Users extends Authenticatable
         "permissions"
     ];
 
+    protected $hidden = [
+        "id",
+        "is_deleted",
+        "deleted_at",
+        "created_at",
+        "updated_at"
+    ];
+
     public function typeData() {
         return $this->hasOne(UserTypes::class, "no", "type")->with("permissionsData");
     }

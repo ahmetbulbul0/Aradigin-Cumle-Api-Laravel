@@ -28,9 +28,16 @@ class LoginController extends Controller
             $typePermissions = UserTypePermissions::where("user_type_no", $user->type)->first()->toArray();
             $userPermissions = UserPermissions::where("user_no", $user->no)->first()->toArray();
 
-            $permissions = array_merge($typePermissions, $userPermissions);
+            $allPermissions = array_merge($typePermissions, $userPermissions);
 
-            $token = $user->createToken('token', $permissions)->plainTextToken;
+
+            foreach ($allPermissions as $permKey => $permValue) {
+                if ($permValue == true) {
+                    $havePermissions[] = $permKey;
+                }
+            }
+
+            $token = $user->createToken('token', $havePermissions)->plainTextToken;
 
             $user = new PublicUsersResource($user);
 
