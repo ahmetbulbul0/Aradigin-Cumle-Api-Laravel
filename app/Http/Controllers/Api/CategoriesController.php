@@ -74,8 +74,8 @@ class CategoriesController extends Controller
             "no" => NoGenerator::generateCategoriesNo(),
             "name" => Str::lower($request->name),
             "slug" => Str::slug(Str::lower($request->name)),
-            "is_parent" => $request->isParent ? $request->isParent : true,
-            "is_children" => $request->isChildren ? $request->isChildren : false,
+            "is_parent" => $request->isParent,
+            "is_children" => $request->isChildren,
             "parent_category" => intval($request->parentCategory)
         ];
         Categories::create($data);
