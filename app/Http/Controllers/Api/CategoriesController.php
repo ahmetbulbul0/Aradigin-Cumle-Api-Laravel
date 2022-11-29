@@ -91,9 +91,9 @@ class CategoriesController extends Controller
      */
     public function show(Request $request)
     {
-        $no = $request->category;
+        $slug = $request->category;
         $data = new Categories();
-        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $data = $data->where(["is_deleted" => false, "slug" => $slug]);
         $data = RelationshipGenerator::addRelationship("parentCategoryData", $data);
         $data = RelationshipGenerator::hasRelationshipInRequest($request, ["childrenCategories", "news"], $data);
         $data = $data->first();
@@ -107,41 +107,47 @@ class CategoriesController extends Controller
      * @param  \App\Models\Categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoriesRequest $request, $no)
+    public function update(UpdateCategoriesRequest $request, $slug)
     {
         $data = new Categories();
-        $data = $data->where(["is_deleted" => false, "no" => $no]);
-
+        $data = $data->where(["is_deleted" => false, "slug" => $slug]);
         $oldData = $data->first();
         $oldData = new CategoriesResource($oldData);
 
+        if ($request->name && $request->name != $oldData->name) {
+            $validated = $request->validate([
+                "name" => ["unique:categories,name"],
+            ]);
+        }
+
         $updateData = [
             "name" => $request->name ? Str::lower($request->name) : $oldData->name,
-            "is_parent" => $request->isParent != null ? $request->isParent : $oldData->is_parent,
-            "is_children" => $request->isChildren != null ? $request->isChildren : $oldData->is_children,
-            "parent_category" => $request->parentCategory ? intval($request->parentCategory) : $oldData->parent_category
+            "is_parent" => $request->isParent,
+            "is_children" => $request->isChildren,
+            "parent_category" => $request->parentCategory ? intval($request->parentCategory) : $oldData->parentCategory
         ];
 
 
-
-        if ($request->isChildren == null) {
-            dd($request->isChildren);
-        }
-
-        if ($updateData["name"] != $oldData["name"]) {
+        if ($updateData["name"] != $oldData->name) {
             $updateData["slug"] = Str::slug($updateData["name"]);
+        } else {
+            $updateData["slug"] = $oldData->slug;
         }
+
 
         if ($updateData["is_parent"] == true) {
             $updateData["parent_category"] = null;
         }
 
         $oldData = $data->with("parentCategoryData");
-        $oldData = $data->first();
+        $oldData = $oldData->first();
 
-        $newData = $data->update($updateData);
-        $newData = $data->with("parentCategoryData");
-        $newData = $data->first();
+        $data->update($updateData);
+
+        $newData = new Categories();
+        $newData = $newData->where(["is_deleted" => false, "slug" => $updateData["slug"]]);
+        $newData = $newData->with("parentCategoryData");
+        $newData = $newData->first();
 
         $response = [
             "oldData" => new CategoriesResource($oldData),

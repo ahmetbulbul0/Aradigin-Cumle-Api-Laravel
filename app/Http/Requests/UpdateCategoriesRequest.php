@@ -24,7 +24,10 @@ class UpdateCategoriesRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "name" => ["nullable", "string"],
+            "isParent" => ["nullable", "boolean"],
+            "isChildren" => ["nullable", "boolean"],
+            "parentCategory" => ["nullable", "integer"]
         ];
     }
 }
