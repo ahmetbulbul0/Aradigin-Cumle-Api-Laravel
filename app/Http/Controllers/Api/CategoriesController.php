@@ -163,10 +163,10 @@ class CategoriesController extends Controller
      * @param  \App\Models\Categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function destroy($no)
+    public function destroy($slug)
     {
         $data = new Categories();
-        $data = $data->where(["is_deleted" => false, "no" => $no]);
+        $data = $data->where(["is_deleted" => false, "slug" => $slug]);
         $deletedData = $data->with("parentCategoryData");
         $deletedData = $data->first();
         $data->update(["is_deleted" => true]);
