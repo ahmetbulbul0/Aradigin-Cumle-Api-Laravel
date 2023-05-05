@@ -15,7 +15,7 @@ class NewsSeeder extends Seeder
     public function run()
     {
         News::factory()
-            ->count(50)
+            ->count(100)
             ->hasResourceUrlData(1, function (array $attributes, News $news) {
                 return ['no' => $news->resource_url, 'platform' => $news->resource_platform];
             })

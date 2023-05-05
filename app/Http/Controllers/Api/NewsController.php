@@ -44,7 +44,6 @@ class NewsController extends Controller
         ];
         return $response;
     }
-
     public function publicIndex(Request $request)
     {
         $data = new News();
