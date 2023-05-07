@@ -24,9 +24,9 @@ return new class extends Migration
             $table->integer("resource_platform");
             $table->integer("resource_url");
             $table->date("added_time");
-            $table->string("publish_status"); // task, published and planned
+            $table->string("publish_status"); // task - published - planned
             $table->integer("publish_date")->nullable();
-            $table->string('status'); // pending, approved, rejected
+            $table->string('status'); // pending - approved - rejected
             $table->longText("slug")->unique();
             $table->boolean("is_approved")->default(false);
             $table->date("approved_at")->nullable();
