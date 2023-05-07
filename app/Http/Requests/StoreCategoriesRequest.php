@@ -25,8 +25,8 @@ class StoreCategoriesRequest extends FormRequest
     {
         return [
             "name" => ["required", "string", "unique:categories,name"],
-            "isParent" => ["nullable", "boolean"],
-            "isChildren" => ["nullable", "boolean"],
+            "isParent" => ["required", "boolean"],
+            "isChildren" => ["required", "boolean"],
             "parentCategory" => ["nullable", "integer"]
         ];
     }

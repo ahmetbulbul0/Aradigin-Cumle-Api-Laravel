@@ -18,9 +18,5 @@ class CategoriesSeeder extends Seeder
         Categories::factory()
             ->count(5)
             ->create();
-
-        Categories::factory()
-            ->count(5)
-            ->create();
     }
 }

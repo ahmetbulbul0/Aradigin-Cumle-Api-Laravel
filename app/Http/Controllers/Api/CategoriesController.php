@@ -76,7 +76,7 @@ class CategoriesController extends Controller
             "slug" => Str::slug(Str::lower($request->name)),
             "is_parent" => $request->isParent,
             "is_children" => $request->isChildren,
-            "parent_category" => intval($request->parentCategory)
+            "parent_category" => $request->isChildren ? intval($request->parentCategory) : NULL
         ];
         Categories::create($data);
         $created = Categories::where(["is_deleted" => false, "no" => $data["no"]])->with("parentCategoryData")->first();
