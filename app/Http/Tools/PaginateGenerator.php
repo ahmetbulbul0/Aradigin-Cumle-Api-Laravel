@@ -7,7 +7,8 @@ use Illuminate\Support\Str;
 
 class PaginateGenerator extends Controller
 {
-    static function paginate($data, $page, $itemPerPage) {
+    static function paginate($data, $page, $itemPerPage)
+    {
         $dataNumber = count($data->get());
 
         $TotalPageNumber = PaginateGenerator::getTotalPageNumber($dataNumber, $itemPerPage);

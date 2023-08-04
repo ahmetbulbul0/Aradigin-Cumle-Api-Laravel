@@ -1,11 +1,15 @@
 # Aradigin-Cumle-Api
 
-**_Aradigin Cumle Api Project_**
+**_Aradigin Cumle Api_**
 
 ## Technologies
 
--   **Laravel**
 -   **Php**
+-   **Laravel**
+
+## Dependencies
+
+-   Sanctum
 
 ## Project Setup Process
 
@@ -35,7 +39,7 @@ php artisan key:generate
 php artisan migrate
 ```
 
-### Run seeders (for test datas, example: users, news, categories...)
+### Run Seeders (for datas)
 
 ```sh
 php artisan db:seed
