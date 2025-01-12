@@ -1,274 +1,100 @@
-# Aradigin-Cumle-Api
+# Aradigin-Cumle-Api-Laravel
 
-**_Aradigin Cumle Api Project_**
+"Aradığın Cümle" is an open-source project designed to provide you with the essential information from news articles by removing unnecessary details and presenting the content in a clean and concise format.
 
-## Technologies
+Key Features:
 
--   **Laravel**
--   **Php**
+- Laravel API:
+    - A robust API developed using Laravel to manage and deliver news data efficiently.
+- Simplified News Delivery:
+    - Filters out irrelevant content to focus on the core information that users need to know.
+- Open Source:
+    - Fully open-source, allowing developers to extend and adapt the API for their specific needs.
+- Efficient Architecture:
+    - Built with Laravel's scalable and secure framework, ensuring fast and reliable performance.
+  
+This project is ideal for applications or platforms that prioritize clean and concise news presentation.
 
-## Project Setup Process
 
-### Install composer (for php packages)
+## Technologies (languages & frameworks)
 
+- Php
+- Laravel
+- MySql
+
+## Setup
+
+1. Install Php Packages
 ```sh
 composer install
 ```
-
-### Create .env file
-
+2. Create .env File
 ```sh
 1. duplicate the ".env.example" in main folder
 2. rename the file you copied to ".env"
 3. configure the ".env" file you renamed
 ```
-
-### Create app key
-
+3. Create App Key
 ```sh
 php artisan key:generate
 ```
-
-### Run migrations (for create database tables)
-
+4. Run Migrations
 ```sh
 php artisan migrate
 ```
-
-### Run seeders (for test datas, example: users, news, categories...)
-
+5. Run Seeders (For Test Datas)
 ```sh
 php artisan db:seed
 ```
-
-### Run project
-
+6. Run Laravel Project
 ```sh
 php artisan serve
 ```
 
-## **Api Documentation**
+## Endpoints
 
-### **_User Types_**
-
--   _Controller_: UserTypesController
--   _Model_: UserTypes
--   _Database_: user_types
--   _Collection_: UserTypesCollection
--   _Resource_: UserTypesResource
--   _Main Route_: /api/user-types
-
-> **Routes**
->
-> -   /api/user-types
->
->     -   Parameters:
->         -   hasUsers (optional)
->             -   value: everything
->         -   sorting (optional)
->             -   value: only available values [no09, no90, nameAZ, nameZA, slugAZ, slugZA, permissionsAZ, permissionsZA]
->         -   page (optional)
->             -   value: numeric values
->
-> -   /api/user-types/:userTypeNo
->     -   Parameters:
->         -   hasUsers (optional)
->             -   value: everything
-
-### **_User Type Permissions_**
-
--   _Controller_: UserTypePermissionsController
--   _Model_: UserTypePermissions
--   _Database_: user_type_permissions
--   _Collection_: UserTypePermissionsCollection
--   _Resource_: UserTypePermissionsResource
--   _Main Route_: /api/user-type-permissions
-
-> **Routes**
->
-> -   /api/user-type-permissions
->
->     -   Parameters:
->         -   sorting (optional)
->             -   value: only available values [no09, no90, userTypeNoAZ, userTypeNoZA]
->         -   page (optional)
->             -   value: numeric values
->
-> -   /api/user-type-permissions/:userTypeNo
-
-### **_Users_**
-
--   _Controller_: UsersController
--   _Model_: Users
--   _Database_: users
--   _Collection_: UsersCollection
--   _Resource_: UsersResource
--   _Main Route_: /api/users
-
-> **Routes**
->
-> -   /api/users
->
->     -   Parameters:
->         -   hasNews (optional)
->             -   value: everything
->         -   sorting (optional)
->             -   value: only available values [no09, no90, usernameAZ, usernameZA, fullNameAZ, fullNameZA, passwordAZ, passwordZA, typeAZ, typeZA, settingsAZ, settingsZA, permissionsAZ, permissionsZA]
->         -   page (optional)
->             -   value: numeric values
->
-> -   /api/users/:userTypeNo
->     -   Parameters:
->         -   hasNews (optional)
->             -   value: everything
-
-### **_User Permissions_**
-
--   _Controller_: UserPermissionsController
--   _Model_: UserPermissions
--   _Database_: user_permissions
--   _Collection_: UserPermissionsCollection
--   _Resource_: UserPermissionsResource
--   _Main Route_: /api/user-permissions
-
-> **Routes**
->
-> -   /api/user-permissions
->
->     -   Parameters:
->         -   sorting (optional)
->             -   value: only available values [no09, no90, userNoAZ, userNoZA, isBannedAZ, isBannedZA]
->         -   page (optional)
->             -   value: numeric values
->
-> -   /api/user-permissions/:userTypeNo
-
-### **_User Settings_**
-
--   _Controller_: UserSettingsController
--   _Model_: UserSettings
--   _Database_: user_settings
--   _Collection_: UserSettingsCollection
--   _Resource_: UserSettingsResource
--   _Main Route_: /api/user-settings
-
-> **Routes**
->
-> -   /api/user-settings
->
->     -   Parameters:
->         -   sorting (optional)
->             -   value: only available values [no09, no90, userNoAZ, userNoZA, isPublicAZ, isPublicZA, profilePhotoAZ, profilePhotoZA, websiteThemeAZ, websiteThemeZA, dashboardThemeAZ, dashboardThemeZA]
->         -   page (optional)
->             -   value: numeric values
->
-> -   /api/user-settings/:userTypeNo
-
-### **_Categories_**
-
--   _Controller_: CategoriesController
--   _Model_: Categories
--   _Database_: categories
--   _Collection_: CategoriesCollection
--   _Resource_: CategoriesResource
--   _Main Route_: /api/categories
-
-> **Routes**
->
-> -   /api/categories
->
->     -   Parameters:
->         -   hasChildrenCategories (optional)
->             -   value: everything
->         -   hasNews (optional)
->             -   value: everything
->         -   sorting (optional)
->             -   value: only available values [no09, no90, nameAZ, nameZA, slugAZ, slugZA, isParent09, isParent90, parentCategoryAZ, parentCategoryZA]
->         -   page (optional)
->             -   value: numeric values
->
-> -   /api/categories/:userTypeNo
->     -   Parameters:
->         -   hasChildrenCategories (optional)
->             -   value: everything
->         -   hasNews (optional)
->             -   value: everything
-
-### **_Resource Platforms_**
-
--   _Controller_: ResourcePlatformsController
--   _Model_: ResourcePlatforms
--   _Database_: resource_platforms
--   _Collection_: ResourcePlatformsCollection
--   _Resource_: ResourcePlatformsResource
--   _Main Route_: /api/resource-platforms
-
-> **Routes**
->
-> /api/resource-platforms
->
-> -   Parameters:
->     -   hasResourceUrls (optional)
->         -   value: everything
->     -   hasNews (optional)
->         -   value: everything
->     -   sorting (optional)
->         -   value: only available values [no09, no90, nameAZ, nameZA, mainUrlAZ, mainUrlZA, slugAZ, slugZA]
->     -   page (optional)
->         -   value: numeric values
->
-> /api/resource-platforms/:userTypeNo
->
-> -   Parameters:
->     -   hasResourceUrls (optional)
->         -   value: everything
->     -   hasNews (optional)
->         -   value: everything
-
-### **_Resource Urls_**
-
--   _Controller_: ResourceUrlsController
--   _Model_: ResourceUrls
--   _Database_: resource_urls
--   _Collection_: ResourceUrlsCollection
--   _Resource_: ResourceUrlsResource
--   _Main Route_: /api/resource-urls
-
-> **Routes**
->
-> /api/resource-urls
->
-> -   Parameters:
->     -   hasNews (optional)
->         -   value: everything
->     -   sorting (optional)
->         -   value: only available values [no09, no90, urlAZ, urlZA, platformAZ, platformZA]
->     -   page (optional)
->         -   value: numeric values
->
-> /api/resource-urls/:userTypeNo
->
-> -   Parameters:
->     -   hasNews (optional)
->         -   value: everything
-
-### **_News_**
-
--   _Controller_: NewsController
--   _Model_: News
--   _Database_: news
--   _Collection_: NewsCollection
--   _Resource_: NewsResource
--   _Main Route_: /api/news
-
-> **Routes**
->
-> /api/news
->
-> -   Parameters:
->     -   sorting (optional)
->         -   value: only available values [no09, no90, titleAZ, titleZA, contentAZ, contentZA, authorAZ, authorZA, categoryAZ, categoryZA, resourcePlatformAZ, resourcePlatformZA, resourceUrlAZ, resourceUrlZA, addedTime09, addedTime90, publishStatusAZ, publishStatusZA, publishDate09, publishDate90, statusAZ, statusZA, slugAZ, slugZA, isApproved09, isApproved90, approvedAt09, approvedAt90, approvedByAZ, approvedByZA, isRejected09, isRejected90, rejectedAt09, rejectedAt90, rejectedByAZ, rejectedByZA, rejectedReasonAZ, rejectedReasonZA]
->     -   page (optional)
->         -   value: numeric values
->
-> /api/news/:userTypeNo
+- User Type's List [localhost:8000/api/user-types](http://localhost:8000/api/user-types) Method: GET
+- User Type Create [localhost:8000/api/user-types](http://localhost:8000/api/user-types) Method: POST
+- User Type Show [localhost:8000/api/user-types/:id](http://localhost:8000/api/user-types/:id) Method: GET
+- User Type Update [localhost:8000/api/user-types/:id](http://localhost:8000/api/user-types/:id) Method: PATCH
+- User Type Delete [localhost:8000/api/user-types/:id](http://localhost:8000/api/user-types/:id) Method: DELETE
+- User Type Permission's List [localhost:8000/api/user-type-permissions](http://localhost:8000/api/user-type-permissions) Method: GET
+- User Type Permission Create [localhost:8000/api/user-type-permissions](http://localhost:8000/api/user-type-permissions) Method: POST
+- User Type Permission Show [localhost:8000/api/user-type-permissions/:id](http://localhost:8000/api/user-type-permissions/:id) Method: GET
+- User Type Permission Update [localhost:8000/api/user-type-permissions/:id](http://localhost:8000/api/user-type-permissions/:id) Method: PATCH
+- User Type Permission Delete [localhost:8000/api/user-type-permissions/:id](http://localhost:8000/api/user-type-permissions/:id) Method: DELETE
+- User's List [localhost:8000/api/users](http://localhost:8000/api/users) Method: GET
+- User Create [localhost:8000/api/users](http://localhost:8000/api/users) Method: POST
+- User Show [localhost:8000/api/users/:id](http://localhost:8000/api/users/:id) Method: GET
+- User Update [localhost:8000/api/users/:id](http://localhost:8000/api/users/:id) Method: PATCH
+- User Delete [localhost:8000/api/users/:id](http://localhost:8000/api/users/:id) Method: DELETE
+- User Permission's List [localhost:8000/api/user-permissions](http://localhost:8000/api/user-permissions) Method: GET
+- User Permission Create [localhost:8000/api/user-permissions](http://localhost:8000/api/user-permissions) Method: POST
+- User Permission Show [localhost:8000/api/user-permissions/:id](http://localhost:8000/api/user-permissions/:id) Method: GET
+- User Permission Update [localhost:8000/api/user-permissions/:id](http://localhost:8000/api/user-permissions/:id) Method: PATCH
+- User Permission Delete [localhost:8000/api/user-permissions/:id](http://localhost:8000/api/user-permissions/:id) Method: DELETE
+- User Setting's List [localhost:8000/api/user-settings](http://localhost:8000/api/user-settings) Method: GET
+- User Setting Create [localhost:8000/api/user-settings](http://localhost:8000/api/user-settings) Method: POST
+- User Setting Show [localhost:8000/api/user-settings/:id](http://localhost:8000/api/user-settings/:id) Method: GET
+- User Setting Update [localhost:8000/api/user-settings/:id](http://localhost:8000/api/user-settings/:id) Method: PATCH
+- User Setting Delete [localhost:8000/api/user-settings/:id](http://localhost:8000/api/user-settings/:id) Method: DELETE
+- Categories List [localhost:8000/api/categories](http://localhost:8000/api/categories) Method: GET
+- Category Create [localhost:8000/api/categories](http://localhost:8000/api/categories) Method: POST
+- Category Show [localhost:8000/api/categories/:id](http://localhost:8000/api/categories/:id) Method: GET
+- Category Update [localhost:8000/api/categories/:id](http://localhost:8000/api/categories/:id) Method: PATCH
+- Category Delete [localhost:8000/api/categories/:id](http://localhost:8000/api/categories/:id) Method: DELETE
+- Resource Platform's List [localhost:8000/api/resource-platforms](http://localhost:8000/api/resource-platforms) Method: GET
+- Resource Platform Create [localhost:8000/api/resource-platforms](http://localhost:8000/api/resource-platforms) Method: POST
+- Resource Platform Show [localhost:8000/api/resource-platforms/:id](http://localhost:8000/api/resource-platforms/:id) Method: GET
+- Resource Platform Update [localhost:8000/api/resource-platforms/:id](http://localhost:8000/api/resource-platforms/:id) Method: PATCH
+- Resource Platform Delete [localhost:8000/api/resource-platforms/:id](http://localhost:8000/api/resource-platforms/:id) Method: DELETE
+- Resource Url's List [localhost:8000/api/resource-urls](http://localhost:8000/api/resource-urls) Method: GET
+- Resource Url Create [localhost:8000/api/resource-urls](http://localhost:8000/api/resource-urls) Method: POST
+- Resource Url Show [localhost:8000/api/resource-urls/:id](http://localhost:8000/api/resource-urls/:id) Method: GET
+- Resource Url Update [localhost:8000/api/resource-urls/:id](http://localhost:8000/api/resource-urls/:id) Method: PATCH
+- Resource Url Delete [localhost:8000/api/resource-urls/:id](http://localhost:8000/api/resource-urls/:id) Method: DELETE
+- News List [localhost:8000/api/news](http://localhost:8000/api/news) Method: GET
+- News Create [localhost:8000/api/news](http://localhost:8000/api/news) Method: POST
+- News Show [localhost:8000/api/news/:id](http://localhost:8000/api/news/:id) Method: GET
+- News Update [localhost:8000/api/news/:id](http://localhost:8000/api/news/:id) Method: PATCH
+- News Delete [localhost:8000/api/news/:id](http://localhost:8000/api/news/:id) Method: DELETE
