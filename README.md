@@ -53,7 +53,14 @@ php artisan serve
 
 ## Endpoints
 
-- User Type's List [localhost:8000/api/user-types](http://localhost:8000/api/user-types) Method: GET
+- Register [localhost:8000/public/news](http://localhost:8000/public/news) Method: POST
+- Login [localhost:8000/login](http://localhost:8000/login) Method: POST
+- Log Out [localhost:8000/log-out](http://localhost:8000/log-out) Method: POST
+- Auth User [localhost:8000/user](http://localhost:8000/user) Method: GET
+- 
+- Public News List [localhost:8000/public/news](http://localhost:8000/public/news) Method: GET
+- Public News Show [localhost:8000/public/news/{newsSlug}](http://localhost:8000/public/news/{newsSlug}) Method: GET
+- 
 - User Type Create [localhost:8000/api/user-types](http://localhost:8000/api/user-types) Method: POST
 - User Type Show [localhost:8000/api/user-types/:id](http://localhost:8000/api/user-types/:id) Method: GET
 - User Type Update [localhost:8000/api/user-types/:id](http://localhost:8000/api/user-types/:id) Method: PATCH
